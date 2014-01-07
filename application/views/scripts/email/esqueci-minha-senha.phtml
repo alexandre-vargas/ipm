@@ -1,0 +1,25 @@
+<html>
+<head>
+</head>
+<body>
+
+	<table>
+		<tr> <td> <b> SIGICMS - Esqueci minha senha. </b> </td> </tr>
+		
+		<tr> <td> Sua nova senha de acesso é <b> <?= $this->strSenha ?> </b> mas ela ainda não está ativa. </td> </tr>
+
+		<tr> <td> Para ativá-la clique no link abaixo. </td> </tr>
+		
+		<tr> 
+			<td>
+				<a href="<?= (isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) == 'on' ? 'https' : 'http') ?>://<?=$_SERVER['HTTP_HOST'] ?>/esqueci-minha-senha/redefinir/usuario/<?= $this->objZendDbTableRowUsuario->id ?>/passe/<?= $this->strSenhaMd5 ?>">
+					<?= (isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) == 'on' ? 'https' : 'http') ?>://<?=$_SERVER['HTTP_HOST'] ?>/esqueci-minha-senha/redefinir/usuario/<?= $this->objZendDbTableRowUsuario->id ?> /passe/<?= $this->strSenhaMd5 ?>
+				</a>
+			</td>
+		</tr>
+
+		
+	</table>	
+</body>
+</html>
+

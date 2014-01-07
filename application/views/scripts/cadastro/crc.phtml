@@ -1,0 +1,29 @@
+<section class="container">
+	<div style="background-color: #FFFFFF; border: 0px solid;">
+	
+		<h1 class="page-title">
+			<span> Contador </span>
+		</h1>
+									
+		<form class="form-horizontal" method="post" action="<?= $this->url(array('controller' => 'cadastro', 'action' => 'receber-crc')); ?>">
+			<fieldset>
+				
+				<div class="control-group">
+					<label class="control-label" for="crc"><span style="color: #8B1A1A;">*</span>&nbsp;CRC</label>
+					<div class="controls">
+						<input type="text" id="crc" name="crc" value="<?= (isset($this->arrParams['crc']) ? $this->arrParams['crc'] : ''); ?>" onKeyPress="verificaNumero(this.event);" placeholder="Somente números" style="width: 175px;" maxlength="14" />
+						<p class="help-block"></p>
+					</div>
+				</div>
+			
+				<button type="submit" class="btn btn-primary" style="margin-left: 90px; margin-bottom: 30px; width: 120px;">Próximo passo</button>
+				<button class="btn" style="margin-left: 20px; margin-bottom: 30px; width: 120px;" onClick="location.href = '<?= $this->url(array('controller' => 'cadastro', 'action' => 'opcoes')) ?>'; return false;">Voltar</button>
+				
+				<br /> 
+	
+			</fieldset>
+		</form>
+	
+	</div>
+	
+</section>

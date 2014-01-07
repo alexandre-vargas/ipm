@@ -1,0 +1,30 @@
+<section class="container">
+<div style="background-color: #FFFFFF; border: 0px solid;">
+
+	<h1 class="page-title">
+		<span> Tipo de usuário </span>
+	</h1>
+								
+	<form class="form-horizontal" method="post" action="<?= $this->url(array('controller' => 'cadastro', 'action' => 'receber-opcao')); ?>">
+		<fieldset>
+			<div style="margin-left: 35px; margin-bottom: 10px;"> Se você é um funcionário ou até mesmo o responsável legal da empresa, então selecione <span style="color: #8B1A1A;">Contribuinte</span>. Caso seja o contador da emrpesa e possua CRC, então selecione <span style="color: #8B1A1A;">Contador</span>. </div>
+			
+			<label class="radio" style="margin-left: 50px; margin-bottom: 10px; margin-top: 15px;">
+				<input type="radio" name="opcao" value="contribuinte" <?= (!isset($this->arrParams['opcao']) || trim($this->arrParams['opcao']) == '' || trim($this->arrParams['opcao']) == 'contribuinte' ? 'checked' : '') ?>>
+				Contribuinte
+			</label>
+			<label class="radio" style="margin-left: 50px; margin-bottom: 30px;">
+				<input type="radio" name="opcao" value="contador" <?= (trim($this->arrParams['opcao']) == 'contador' ? 'checked' : '') ?>>
+				Contador
+			</label>			
+		
+			<button type="submit" class="btn btn-primary" style="margin-left: 35px; margin-bottom: 30px;">Próximo passo</button>
+			<button class="btn" onClick="location.href = '<?= $this->url(array('controller' => 'login', 'action' => 'login')) ?>'; return false;" style="margin-left: 20px; margin-bottom: 30px;">Voltar à página de login</button>
+			
+			<br /> 
+
+		</fieldset>
+	</form>
+
+</div>
+</section>

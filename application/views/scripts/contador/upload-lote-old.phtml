@@ -1,0 +1,44 @@
+<section class="container">
+
+	<div style="background-color: #FFFFFF; padding-bottom: 5px;">
+	
+		<h1 class="page-title">
+			<span> Importação Lote Contribuintes </span>
+		</h1>
+							
+		<form class="form-horizontal" method="post" enctype="multipart/form-data" action="<?= $this->url(array('controller' => 'contador', 'action' => 'importar-lote')); ?>" >
+
+			<div style="margin-left: 35px; margin-bottom: 30px; color: #8B1A1A;"> Todos os contribuintes serão importados no município de <?= $this->objZendDbTableRowMunicipio->descri ?> independente do município informado no arquivo. Este processo pode levar vários minutos.</div>
+		
+			<div class="control-group">
+				<label class="control-label" for="ano_base"><span style="color: #8B1A1A;">*</span> Ano Base</label>
+				<div class="controls">
+	
+					<select id="ano_base" name="ano_base" required>
+						<option value=""> Escolha uma opção </option>
+						<?php 
+						for($i = Date('Y'); $i >= 2010; $i--)
+							print '<option value="' . $i . '" ' . ($i == $this->arrParams['ano_base'] ? 'selected' : '') . '>' . $i . '</option>'
+						?>
+					</select>
+				</div>
+			</div>
+			
+			<div class="control-group">
+				<label class="control-label" for="ano_base"><span style="color: #8B1A1A;">*</span> Arquivo de lote</label>
+				<div class="controls">
+					<input type="file" class="btn" name="Filedata" style="width: 400px;" />
+					<!-- <input type="submit" value="Send File" />  -->
+				</div>
+			</div>					
+
+			
+			<div class="controls">
+				<button type="submit" class="btn btn-primary">Importar</button>
+			</div>
+			
+		</form>
+		
+	</div>
+
+</section>

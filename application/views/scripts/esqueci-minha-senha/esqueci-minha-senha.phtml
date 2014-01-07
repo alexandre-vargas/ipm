@@ -1,0 +1,43 @@
+<section class="container">
+<div style="background-color: #FFFFFF; border: 0px solid;">
+
+	<h1 class="page-title">
+		<span> Esqueci minha senha </span>
+	</h1>
+								
+	<form class="form-horizontal" method="post" action="<?= $this->url(array('controller' => 'esqueci-minha-senha', 'action' => 'salvar')); ?>">
+		<fieldset>
+			
+			<div style="margin-left: 35px; margin-bottom: 30px; color: #8B1A1A;"> Informe os dados abaixo para re-definir sua senha. Este processo só será efetivado após a confirmação em seu email.</div>
+			
+			<div class="control-group" style="border: 0px solid;">
+				<label class="control-label" for="usuario" style="border: 0px solid; width: 200px;"><span style="color: #8B1A1A;">*</span> Usuário: &nbsp;&nbsp;</label>
+				<div class="controls">
+					<input type="text" id="usuario" name="usuario" value="<?= (isset($this->arrParams['usuario']) ? $this->arrParams['usuario'] : ''); ?>" style="width: 175px;" maxlength="14" required />
+				</div>
+			</div>
+			
+			<div class="control-group">
+				<label class="control-label" for="email" style="border: 0px solid; width: 200px;"><span style="color: #8B1A1A;">*</span> Email:&nbsp;&nbsp;</label>
+				<div class="controls">
+					<input type="email" id="email" name="email" value="<?= (isset($this->arrParams['email']) ? $this->arrParams['email'] : ''); ?>" style="width: 240px;" aria-invalid="false" data-validation-email-message="Email inválido" required />
+					<p class="help-block"></p>
+				</div>
+			</div>
+
+			<div class="control-group" style="border: 0px solid;">
+				<div class="controls" style="margin-left: 200px; border: 0px solid;">
+					<button type="submit" class="btn btn-primary">Re-enviar</button>
+					<button class="btn" onClick="location.href= '<?= $this->url(array('controller' => 'login', 'action' => 'index')); ?>'; return false;">Voltar à página de login</button>
+					
+				</div>
+			</div>
+			
+		
+			<br />
+			
+		</fieldset>
+	</form>
+
+</div>
+</section>

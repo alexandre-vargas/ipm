@@ -1,0 +1,6 @@
+<?php
+$arrPath = array_reverse(explode(DIRECTORY_SEPARATOR, __FILE__));
+include APPLICATION_PATH . DIRECTORY_SEPARATOR . 
+		'views' . DIRECTORY_SEPARATOR . 
+		'layout' . DIRECTORY_SEPARATOR . 
+		$arrPath[0];

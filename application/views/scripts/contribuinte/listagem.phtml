@@ -1,0 +1,61 @@
+<div style="background-color: #FFFFFF; border: 0px solid;">
+	<?php
+	if(!(boolean)$this->boolEscondeTitulo) {
+	?>
+		<h1 class="page-title">
+			<span> Listagem de Contribuintes </span>
+		</h1>
+	<?php
+	} 
+	?>
+
+	<div class="well">
+	
+		<div id="MySearch" class="input-append search">
+			<label class="control-label" for="cpf_cnpj">&nbsp;CPF / CNPJ</label>
+			<input type="text" class="input-medium" id="cpf_cnpj" name="cpf_cnpj" style="width: 130px;" value="<?= (isset($this->arrParams['cpf_cnpj']) ? $this->arrParams['cpf_cnpj'] : ''); ?>" onKeyPress="verificaNumero(this.event);" placeholder="Somente números" maxlength="14" />		
+		</div>
+		
+		&nbsp;
+		
+		<div id="MySearch" class="input-append search">
+			<label class="control-label" for="inscricao_estadual">&nbsp;Inscrição Estadual</label>		
+			<input type="text" id="inscricao_estadual" name="inscricao_estadual" style="width: 130px;" value="<?= (isset($this->arrParams['inscricao_estadual']) ? $this->arrParams['inscricao_estadual'] : ''); ?>" placeholder="Somente números" />
+		</div>
+		
+		&nbsp;
+		
+		<div id="MySearch" class="input-append search">
+			<label class="control-label" for="descri">&nbsp;Nome / Razão Social</label>
+			<input type="text" id="descri" name="descri" style="width: 230px;" value="<?= (isset($this->arrParams['descri']) ? $this->arrParams['descri'] : ''); ?>" />
+		</div>
+		
+		&nbsp;
+		
+		<div id="MySearch" class="input-append search">
+			<label class="control-label" for="id_regime">&nbsp;Regime Atual</label>
+			<select name="id_regime" required>
+				<option value=""> Regime </option>
+				<?php
+				foreach($this->objZendDbTableRowsetRegime as $objZendDbTableRowRegime)
+					print '<option value="'. $objZendDbTableRowRegime->id . '" ' . ($objZendDbTableRowRegime->id == $this->arrParams['id_regime'] ? 'selected' : '') . '>' . $objZendDbTableRowRegime->descri .'</option>';
+				?>
+			</select>
+			
+			<button type="submit" class="btn btn-primary" style="margin-left: 10px;" onClick="alert('Em desenvolvimento'); return false;">Pesquisar</button>
+						
+		</div>
+		
+	</div>	
+	
+	<?php 
+	print $this->render('contribuinte/listagem-conteudo.phtml');
+	?>	
+		
+	<tfooter>
+		<?php
+		General::pagination2($this->intPage, $this->intQtdPages, $this->intQtdPerPage, $this->intQtdTotal);
+		?>
+	</tfooter>
+	
+</div>
