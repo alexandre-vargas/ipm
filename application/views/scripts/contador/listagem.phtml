@@ -1,0 +1,99 @@
+<div style="background-color: #FFFFFF; border: 0px solid;">
+
+	<h1 class="page-title">
+		<span> Listagem de Contadores </span>
+	</h1>
+
+	<div class="well search-example">
+	
+		<div id="MySearch" class="input-append search">
+			<label class="control-label" for="cpf_cnpj">&nbsp;CPF / CNPJ</label>
+			<input type="text" class="input-medium" id="cpf_cnpj" name="cpf_cnpj" style="width: 130px;" value="<?= (isset($this->arrParams['cpf_cnpj']) ? $this->arrParams['cpf_cnpj'] : ''); ?>" onKeyPress="verificaNumero(this.event);" placeholder="Somente números" maxlength="14" />		
+		</div>
+		
+		&nbsp;
+		
+		<div id="MySearch" class="input-append search">
+			<label class="control-label" for="inscricao_estadual">&nbsp;Inscrição Estadual</label>		
+			<input type="text" id="inscricao_estadual" name="inscricao_estadual" style="width: 130px;" value="<?= (isset($this->arrParams['inscricao_estadual']) ? $this->arrParams['inscricao_estadual'] : ''); ?>" placeholder="Somente números" />
+		</div>
+		
+		&nbsp;
+		
+		<div id="MySearch" class="input-append search">
+			<label class="control-label" for="descri">&nbsp;Nome / Razão Social</label>
+			<input type="text" id="descri" name="descri" style="width: 230px;" value="<?= (isset($this->arrParams['descri']) ? $this->arrParams['descri'] : ''); ?>" />
+		</div>
+		
+		&nbsp;
+
+		<button type="submit" class="btn btn-primary" style="margin-left: 10px;" onClick="alert('Em desenvolvimento'); return false;">Pesquisar</button>
+		
+	</div>	
+	
+	<table class="table table-striped table-bordered" border="0">
+	
+		<thead>
+			<tr>
+				<th>CPF/CNPJ</th>
+				<th>CRC</th>
+				<th>Data CRC</th>
+				<th>Nome/Razão Social</th>
+				<th style="text-align: center;">Editar</th>
+				<th style="text-align: center;">Excluir</th>
+				<th style="text-align: center;">Notificar</th>
+			</tr>
+		</thead>
+
+		
+		<?php 
+		if(!(boolean)$this->intQtdPages) {
+			print '
+				<tbody><tr><td colspan="7" style="text-align: center;"> <b> --- Sem resultado --- </b> </td></tr></tbody>';
+		} else { 
+		?>
+			<tbody>
+				<?php
+				foreach($this->objZendDbTableRowsetContador as $objZendDbTableRowContador) {
+					$objZendDbTableRowPessoa = $objZendDbTableRowContador->findParentEntity_Pessoa();
+					?>
+					<tr>
+						<td><?=$objZendDbTableRowPessoa ->cpf_cnpj?></td>
+						<td><?=$objZendDbTableRowContador->crc?></td>
+						<td><?=$objZendDbTableRowContador->data_crc?></td>
+						<td><?=$objZendDbTableRowPessoa->descri?></td>
+						<td style="text-align: center;"> 
+							<a class="btn btn-primary" href="<?= $this->url(array('controller' => 'contador', 'action' => 'alterar', 'id' => base64_encode($objZendDbTableRowContador->id)), null, true) ?> ">
+								<i class="icon-edit icon-large"></i> 
+							</a>
+	  					</td>
+						<td style="text-align: center;">
+							<a href="#" class="btn btn-primary" onClick="excluir('<?= base64_encode($objZendDbTableRowContador->id) ?>', '<?= $objZendDbTableRowPessoa->descri ?>'); return false;">
+								<i class="icon-trash icon-large"></i> 
+							</a>
+						</td>
+						<td style="text-align: center;"> 
+							<a href="#" class="btn btn-primary" onClick="alert('Em desenvolvimento'); return false;">
+								<i class="icon-envelope icon-large"></i> 
+							</a>
+						</td>
+						
+					</tr>
+				<?php 
+				}
+				?>
+			</tbody>
+		<?php
+		}
+		?>	
+		
+	</table>
+		
+		
+	<tfooter>
+		<?php
+		General::pagination2($this->intPage, $this->intQtdPages, $this->intQtdPerPage, $this->intQtdTotal);
+		?>
+	</tfooter>
+	
+</div>

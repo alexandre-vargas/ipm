@@ -1,0 +1,115 @@
+<section class="container">
+
+	<div style="background-color: #FFFFFF;">
+	
+		<h1 class="page-title">
+			<span> Vínculo entre Contadores e Contribuintes </span>
+		</h1>
+									
+		<form class="form-horizontal" method="post" action="<?= $this->url(array('controller' => 'contador', 'action' => 'salvar')); ?>">
+		
+			<div class="control-group">
+				<label class="control-label" for="id_regime"> Parecer </label>
+
+				<div class="controls">
+					<select id="status" name="status" required>
+						<option value="1"> Pendente </option>
+						<option value="2"> Aprovado </option>
+						<option value="3"> Não Aprovado </option>
+					</select>
+				</div>
+			</div>
+		
+			<hr />
+			
+			<div class="control-group">
+				<label class="control-label"> &nbsp; </label>
+				<div class="controls">
+					<a id="pesquisar_contador" class="btn btn-primary" href="#">
+						Pesquisar Contador <i class="icon-share-alt icon-large"></i>
+					</a>
+				</div>
+			</div>
+			
+			<div class="control-group">
+				<label class="control-label" for="crc"> CRC</label>
+				<div class="controls">
+					<input type="text" id="crc" name="crc" value="<?= (isset($this->arrParams['crc']) ? $this->arrParams['crc'] : ''); ?>" style="width: 175px;" <?= ($this->boolCrcReadOnly ? 'readonly': '') ?> readonly required />
+				</div>
+			</div>
+			
+			<div class="control-group">
+				<label class="control-label" for="data_crc" style="margin-right: 20px;"> Data CRC</label>
+				
+				<div class="input-append date" id="data_crc" data-date="" data-date-format="">
+					<input class="span2" type="text" name="data_crc" value="<?= (isset($this->arrParams['data_crc']) ? date('d/m/Y', strtotime($this->arrParams['data_crc'])) : ''); ?>" readonly required>
+					<span class="add-on"><i class="icon-calendar"></i></span>
+				</div>
+			</div>
+	
+			<div class="control-group">
+				<label class="control-label" for="cpf_cnpj">CPF/CNPJ</label>
+				<div class="controls">
+					<input type="text" id="cpf_cnpj" name="cpf_cnpj" value="<?= (isset($this->arrParams['cpf_cnpj']) ? $this->arrParams['cpf_cnpj'] : ''); ?>" onKeyPress="verificaNumero(this.event);" placeholder="Somente números" style="width: 175px;" maxlength="14" required <?= ( (boolean)isset($this->objZendSessionNamespaceCadastro->intCpfCnpj) ? 'readonly' : '') ?> readonly />
+				</div>
+			</div>
+	
+			<div class="control-group">
+				<label class="control-label" for="descri"> Nome / Razão Social</label>
+				<div class="controls">
+					<input type="text" id="descri" name="descri" value="<?= (isset($this->arrParams['descri']) ? $this->arrParams['descri'] : ''); ?>" placeholder="" style="width: 350px;" readonly required />
+				</div>
+			</div>
+			
+			<hr />
+
+			<div class="control-group">
+				<label class="control-label"> &nbsp; </label>
+				<div class="controls">
+					<a id="pesquisar_contribuinte" class="btn btn-primary" href="#" >
+						Pesquisar Contribuinte <i class="icon-share-alt icon-large"></i> 
+					</a>
+					<input type="hidden" id="content" value="Alexandre">
+				</div>
+			</div>
+			
+			<div class="control-group">
+				<label class="control-label" for="cpf_cnpj"><span style="color: #8B1A1A;">*</span> CPF/CNPJ</label>
+				<div class="controls">
+					<input type="text" id="cpf_cnpj" name="cpf_cnpj" value="<?= (isset($this->arrParams['cpf_cnpj']) ? $this->arrParams['cpf_cnpj'] : ''); ?>" onKeyPress="verificaNumero(this.event);" placeholder="Somente números" style="width: 175px;" maxlength="14" <?= ($this->boolCpfCnpjReadOnly ? 'readonly' : '') ?> readonly required />
+				</div>
+			</div>
+	
+			<div class="control-group">
+				<label class="control-label" for="inscricao_estadual"><span style="color: #8B1A1A;">*</span> Inscrição Estadual</label>
+				<div class="controls">
+					<input type="text" id="inscricao_estadual" name="inscricao_estadual" value="<?= (isset($this->arrParams['inscricao_estadual']) ? $this->arrParams['inscricao_estadual'] : ''); ?>" placeholder="Somente números" style="width: 175px;" <?= ($this->boolInscricaoEstadualReadOnly ? 'readonly' : '') ?> readonly required />
+				</div>
+			</div>
+
+			<div class="control-group">
+				<label class="control-label" for="descri"><span style="color: #8B1A1A;">*</span> Nome / Razão Social</label>
+				<div class="controls">
+					<input type="text" id="descri" name="descri" value="<?= (isset($this->arrParams['descri']) ? $this->arrParams['descri'] : ''); ?>" placeholder="" style="width: 350px;" readonly required />
+				</div>
+			</div>
+
+			<div class="control-group">
+				<label class="control-label" for="cnae"><span style="color: #8B1A1A;">*</span> CNAE Principal</label>
+				<div class="controls">
+					<input type="text" id="cnae" name="cnae" value="<?= (isset($this->arrParams['cnae']) ? $this->arrParams['cnae'] : ''); ?>" placeholder="Somente números" readonly required />
+				</div>
+			</div>
+
+			<div class="controls">
+				<button type="submit" class="btn btn-primary" style="margin-left: 30px; margin-bottom: 30px; width: 120px;">Salvar</button>
+				<button class="btn" style="margin-left: 20px; margin-bottom: 30px; width: 120px;" onClick="location.href = 'contribuinte/listagem'; return false;">Cancelar</button>
+			</div>
+
+
+		</form>
+	
+	
+	</div>
+
+</section>

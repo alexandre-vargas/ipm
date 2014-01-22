@@ -1,0 +1,23 @@
+<br />
+<br />
+<br />
+<form enctype="multipart/form-data" action="/upload/salvar" method="POST"> 
+<fieldset>
+<legend>Área para retificação e envio de GIA para a prefeitura</legend>
+
+    Selecione o arquivo de GIA para upload: <br /><br />
+	<input name="uploadedfile" type="file" />
+    <br /><br />
+    <?php if(isset($_GET['msg']) && $_GET['erro'] == 0) echo "<span style='color:blue;'>".$_GET['msg']."</span>"; ?>
+    <?php if(isset($_GET['msg']) && $_GET['erro'] == 1) echo "<span style='color:red;'>".$_GET['msg']."</span>"; ?>
+    <br />
+    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+        &nbsp; &nbsp; &nbsp;
+    <input type="submit" value="Enviar GIA" />
+</fieldset>
+</form>
+

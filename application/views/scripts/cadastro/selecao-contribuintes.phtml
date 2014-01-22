@@ -1,0 +1,36 @@
+<section class="container">
+	<div style="background-color: #FFFFFF; border: 0px solid;">
+	
+		<h1 class="page-title">
+			<span> Seleção de Contribuintes </span>
+		</h1>
+									
+		<form class="form-horizontal" method="post" action="<?= $this->url(array('controller' => 'cadastro', 'action' => '')); ?>">
+			<fieldset>
+
+				<div style="margin-left: 35px; margin-bottom: 30px; color: #8B1A1A;"> Informe a Inscrição Estadual do contribuinte e clique em "Armazenar". Após selecionar todos os contribuintes, clique em "Concluir" para finalizar o processo.</div>
+				
+				<div class="control-group">
+					<label class="control-label"><span style="color: #8B1A1A;">*</span>&nbsp;Inscrição Estadual</label>
+					<div class="controls">
+						<input type="text" id="inscricao_estadual" name="inscricao_estadual" value="<?= (isset($this->arrParams['inscricao_estadual']) ? $this->arrParams['inscricao_estadual'] : ''); ?>" placeholder="Somente números" style="width: 175px;" />
+						<a id="armazenar" class="btn btn-primary" href="#" >
+							Selecionar <i class="icon-share-alt icon-large"></i> 
+						</a>
+					</div>
+				</div>
+			
+				<div id="conteudo" style="margin-left: 60px; margin-bottom: 30px; width: 900px; height: 150px; border: 1px solid;">
+					registro aqui
+				</div>
+				
+				<button type="submit" class="btn btn-primary" style="margin-left: 50px; margin-bottom: 30px; width: 120px;">Salvar</button>
+				<button class="btn" style="margin-left: 20px; margin-bottom: 30px; width: 120px;" onClick="location.href = 'cadastro/opcoes'; return false;">Voltar</button>
+				
+				<br /> 
+	
+			</fieldset>
+		</form>
+	
+	</div>
+</section>

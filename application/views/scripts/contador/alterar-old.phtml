@@ -1,0 +1,177 @@
+<section class="container">
+
+	<div style="background-color: #FFFFFF;">
+	
+		<h1 class="page-title">
+			<span> Alteração de Contribuinte </span>
+		</h1>
+									
+		<form class="form-horizontal" method="post" action="<?= $this->url(array('controller' => 'contribuinte', 'action' => 'salvar'), null, true); ?>">
+			<input type="hidden" name="id" value="<?= $this->arrParams['id'] ?>">
+			<fieldset>
+	
+				<div class="control-group">
+					<label class="control-label" for="id_regime"><span style="color: #8B1A1A;">*</span> Ano Base</label>
+					<div class="controls">
+		
+						<select name="ano_base" required>
+							<option value=""> Escolha uma opção </option>
+							<?php 
+							for($i = Date('Y'); $i >= 2010; $i--)
+								print '<option value="' . $i . '" ' . ($i == $this->arrParams['ano_base'] ? 'selected' : '') . '>' . $i . '</option>'
+							?>
+						</select>
+					</div>
+				</div>
+				
+				<hr />
+				
+				<div class="control-group">
+					<label class="control-label" for="id_regime"><span style="color: #8B1A1A;">*</span> Regime Atual</label>
+	
+					<div class="controls">
+						<select name="id_regime" required>
+							<option value=""> Escolha uma opção </option>
+							<?php
+							foreach($this->objZendDbTableRowsetRegime as $objZendDbTableRowRegime)
+								print '<option value="'. $objZendDbTableRowRegime->id . '" ' . ($objZendDbTableRowRegime->id == $this->arrParams['id_regime'] ? 'selected' : '') . '>' . $objZendDbTableRowRegime->descri .'</option>';
+							?>
+						</select>
+					</div>
+				</div>
+				
+				<div class="control-group">
+					<label class="control-label" for="cpf_cnpj"><span style="color: #8B1A1A;">*</span> CPF/CNPJ</label>
+					<div class="controls">
+						<input type="text" id="cpf_cnpj" name="cpf_cnpj" value="<?= (isset($this->arrParams['cpf_cnpj']) ? $this->arrParams['cpf_cnpj'] : ''); ?>" onKeyPress="verificaNumero(this.event);" placeholder="Somente números" style="width: 175px;" maxlength="14" required />
+					</div>
+				</div>
+		
+				<div class="control-group">
+					<label class="control-label" for="inscricao_estadual"><span style="color: #8B1A1A;">*</span> Inscrição Estadual</label>
+					<div class="controls">
+						<input type="text" id="inscricao_estadual" name="inscricao_estadual" value="<?= (isset($this->arrParams['inscricao_estadual']) ? $this->arrParams['inscricao_estadual'] : ''); ?>" placeholder="Somente números" style="width: 175px;" />
+					</div>
+				</div>
+	
+				<div class="control-group">
+					<label class="control-label" for="descri"><span style="color: #8B1A1A;">*</span> Nome / Razão	Social</label>
+					<div class="controls">
+						<input type="text" id="descri" name="descri" value="<?= (isset($this->arrParams['descri']) ? $this->arrParams['descri'] : ''); ?>" placeholder="" style="width: 350px;" required />
+					</div>
+				</div>
+	
+				<div class="control-group">
+					<label class="control-label" for="cnae"><span style="color: #8B1A1A;">*</span> CNAE</label>
+					<div class="controls">
+						<input type="text" id="cnae" name="cnae" value="<?= (isset($this->arrParams['cnae']) ? $this->arrParams['cnae'] : ''); ?>" placeholder="Somente números" />
+					</div>
+				</div>
+		
+				<hr />
+	
+				<div class="control-group">
+					<label class="control-label" for="cep"><span style="color: #8B1A1A;">*</span> CEP</label>
+					<div class="controls">
+						<input type="text" id="cep" name="cep" value="<?= (isset($this->arrParams['cep']) ? $this->arrParams['cep'] : ''); ?>" class="input-medium" placeholder="Somente números">
+						<button type="button" class="btn"><i class="icon-search"></i></button>
+					</div>				
+					<!--
+					<div class="controls">
+						<input type="text" id="cep" name="cep" value="<?= (isset($this->arrParams['cep']) ? $this->arrParams['cep'] : ''); ?>" placeholder="Somente números" style="width: 175px;" required />
+					</div>
+					-->
+				</div>
+	
+				<div class="control-group">
+					<label class="control-label" for="tipo_logradouro"><span style="color: #8B1A1A;">*</span> Tipo Logradouro</label>
+					<div class="controls">
+						<input type="text" id="tipo_logradouro" name="tipo_logradouro" value="<?= (isset($this->arrParams['tipo_logradouro']) ? $this->arrParams['tipo_logradouro'] : ''); ?>" placeholder="RUA, AV, ESTR, etc" style="width: 175px;" required />
+					</div>
+				</div>
+				
+				<div class="control-group">
+					<label class="control-label" for="logradouro"><span style="color: #8B1A1A;">*</span> Logradouro</label>
+					<div class="controls">
+						<input type="text" id="logradouro" name="logradouro" value="<?= (isset($this->arrParams['logradouro']) ? $this->arrParams['logradouro'] : ''); ?>" placeholder="" style="width: 350px;" required />
+					</div>
+				</div>
+		
+				<div class="control-group">
+					<label class="control-label" for="numero">Número</label>
+					<div class="controls">
+						<input type="text" id="numero" name="numero" value="<?= (isset($this->arrParams['numero']) ? $this->arrParams['numero'] : ''); ?>" placeholder="Somente números" style="width: 175px;"/>
+					</div>
+				</div>
+		
+				<div class="control-group">
+					<label class="control-label" for="complemento">Complemento</label>
+					<div class="controls">
+						<input type="text" id="complemento" name="complemento" value="<?= (isset($this->arrParams['complemento']) ? $this->arrParams['complemento'] : ''); ?>" placeholder="" style="width: 175px;"/>
+					</div>
+				</div>
+		
+				<div class="control-group">
+					<label class="control-label" for="bairro"><span style="color: #8B1A1A;">*</span> Bairro</label>
+					<div class="controls">
+						<input type="text" id="bairro" name="bairro" value="<?= (isset($this->arrParams['bairro']) ? $this->arrParams['bairro'] : ''); ?>" placeholder="" style="width: 350px;" required/>
+					</div>
+				</div>
+	
+				<div class="control-group">
+					<label class="control-label" for="municipio"><span style="color: #8B1A1A;">*</span> Município</label>
+					<div class="controls">
+						<input type="text" id="municipio" name="municipio" value="<?= (isset($this->arrParams['municipio']) ? $this->arrParams['municipio'] : ''); ?>" placeholder="" style="width: 350px;" required />
+					</div>
+				</div>
+	
+				<div class="control-group">
+					<label class="control-label" for="estado"><span style="color: #8B1A1A;">*</span> Estado</label>
+	
+					<div class="controls">
+						<select name="estado" required>
+							<option value=""> Escolha uma opção </option>
+							<?php
+							foreach($this->objZendDbTableRowsetEstado as $objZendDbTableRowEstado)
+								print '<option value="'. $objZendDbTableRowEstado->sigla . '" ' . ($objZendDbTableRowEstado->sigla == $this->arrParams['estado'] ? 'selected' : '') . '>' . $objZendDbTableRowEstado->descri .'</option>';
+							?>
+						</select>
+					</div>
+				</div>
+				
+				<hr />
+	
+				<div class="control-group">
+					<label class="control-label"><span style="color: #8B1A1A;">*</span> Email</label>
+					<div class="controls">
+						<input type="email" id="email" name="email" value="<?= (isset($this->arrParams['email']) ? $this->arrParams['email'] : ''); ?>" aria-invalid="false" data-validation-email-message="Email inválido" style="width: 350px;" required />
+						<p class="help-block"></p>
+					</div>
+				</div>
+				
+				<?php 
+				if($this->boolTipoControle) {
+				?>
+					<div class="controls">
+						<button type="submit" class="btn btn-primary">Salvar</button>
+						<button class="btn" onClick="location.href = 'contribuinte/listagem'; return false;">Cancel</button>
+					</div>
+				<?
+				} else {
+				?>
+					<div class="controls">
+						<button type="submit" class="btn btn-primary" style="margin-left: 50px; margin-bottom: 30px; width: 120px;">Próxima etapa</button>
+						<button class="btn" style="margin-left: 20px; margin-bottom: 30px; width: 120px;" onClick="location.href = '<?= $this->url(array('controller' => 'cadastro', 'action' => 'inscricao-estadual')) ?>'; return false;">Voltar</button>
+					</div>
+				<?php 
+				}
+				?>				
+				<br />
+				
+			</fieldset>
+		</form>
+	
+	
+	</div>
+
+</section>

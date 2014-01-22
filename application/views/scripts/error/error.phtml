@@ -1,0 +1,34 @@
+<div class="error-container" style="text-align: center;">
+	<h1>Oops!</h1>
+	<br />
+	<div class="error-details">
+		<div class="alert alert-error">
+			<h3>Ocorreu um erro inesperado!</h3>
+		</div>
+	</div>
+	<br />
+	<div class="error-actions">
+		<button class="btn btn-large btn-primary" onClick="window.history.go(-1)"> Voltar à página anterior</button>
+		<button class="btn btn-large" onClick="alert('Em desenvolvimento.'); return false;"> Contactar o suporte</button>
+		</div>
+</div>
+
+
+<?php 
+if (Zend_Registry::get('config')->ambiente == 'localhost' || Zend_Registry::get('config')->ambiente == 'desenvolvimento') { ?>
+	<h3>Exception information:</h3>
+	<p>
+		<b>Message:</b>
+		<?php echo $this->exception->getMessage()?>
+	</p>
+	<h3>Request Parameters:</h3>
+	<pre>
+		<?php echo var_export($this->request->getParams(), 1) ?>
+	</pre>
+	<h3>Stack trace:</h3>
+	<pre>
+		<?php echo $this->exception->getTraceAsString() ?>
+	</pre>
+<?php  
+} ?>
+
