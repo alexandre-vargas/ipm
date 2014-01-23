@@ -38,7 +38,7 @@ class Bootstrap {
 				get_include_path() .
 				
 				PATH_SEPARATOR . APPLICATION_PATH . DIRECTORY_SEPARATOR . 'prefeituras' . DIRECTORY_SEPARATOR . PREFEITURA . DIRECTORY_SEPARATOR . 'models' . DIRECTORY_SEPARATOR .
-				
+
 				PATH_SEPARATOR . APPLICATION_PATH . DIRECTORY_SEPARATOR . 'controllers' . DIRECTORY_SEPARATOR .
 				PATH_SEPARATOR . APPLICATION_PATH . DIRECTORY_SEPARATOR . 'models' . DIRECTORY_SEPARATOR);
 
@@ -64,7 +64,7 @@ class Bootstrap {
 		$objZendConfigIni = new Zend_Config_Ini(APPLICATION_PATH . DIRECTORY_SEPARATOR . 'prefeituras' . DIRECTORY_SEPARATOR . PREFEITURA . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR . 'config.ini');
 		Zend_Registry::set('config', $objZendConfigIni->$strEnviroment);
 
-		$objZendDbAdapterPDOMysql = Zend_Db::factory($objZendConfigIni->$strEnviroment->resources->db);
+		$objZendDbAdapterPDOMysql = Zend_Db::factory(Zend_Registry::get('config')->resources->db);
 		Zend_Db_Table::setDefaultAdapter($objZendDbAdapterPDOMysql);
 		Zend_Registry::set('db', $objZendDbAdapterPDOMysql);
 		

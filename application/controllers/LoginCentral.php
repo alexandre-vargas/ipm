@@ -33,7 +33,7 @@ class LoginCentral extends Zend_Controller_Action {
 		$arrParams = array_map('trim', $arrParams);
 
 		// Validação 1
-		if(trim($arrParams['usuario']) == '' || trim($arrParams['senha']) == '') {
+		if($arrParams['usuario'] == '' || $arrParams['senha'] == '') {
 			$arrParams['erro'][] = 'Informe Usuáio e Senha.';
 			$this->forward('login', null, null, $arrParams);
 			return;
@@ -86,7 +86,7 @@ class LoginCentral extends Zend_Controller_Action {
 		$objZendDbTableRowPessoa = $objZendDbTableRowUsuario->findParentEntity_Pessoa();
 		$this->_objZendSessionNamespace->objZendDbTableRowPessoa = $objZendDbTableRowPessoa;
 
-		(boolean)$objZendDbTableRowPessoa->findEntity_Contribuinte()->count() &&
+		if((boolean)$objZendDbTableRowPessoa->findEntity_Contribuinte()->count())
 			$this->_objZendSessionNamespace->objZendDbTableRowContribuinte = $objZendDbTableRowPessoa->findEntity_Contribuinte()->current();
 
 		(boolean)$objZendDbTableRowPessoa->findEntity_Contador()->count() &&
