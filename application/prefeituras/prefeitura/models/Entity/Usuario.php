@@ -9,7 +9,7 @@ class Entity_Usuario extends Entity_UsuarioCentral {
 	 * @return Entity
 	 */
 	public static function getInstance() {
-		null == self::$instance &&
+		if(null == self::$instance)
 			self::$instance = new self();
 		return self::$instance;
 	}

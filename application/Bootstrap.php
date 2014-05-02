@@ -44,7 +44,7 @@ class Bootstrap {
 
 		include 'Zend/Loader/Autoloader.php';
 		Zend_Loader_Autoloader::getInstance()->setFallbackAutoloader(true);
-		
+
 		$objZendControllerFront = Zend_Controller_Front::getInstance();
 		$objZendControllerFront->throwExceptions(false);
 		$objZendControllerFront->setControllerDirectory(APPLICATION_PATH . DIRECTORY_SEPARATOR . 'prefeituras' . DIRECTORY_SEPARATOR . PREFEITURA . DIRECTORY_SEPARATOR . 'controllers');
