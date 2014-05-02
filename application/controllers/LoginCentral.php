@@ -28,7 +28,7 @@ class LoginCentral extends Zend_Controller_Action {
 
 		// Recepciona.
 		$arrParams = $this->getRequest()->getParams();
-		
+
 		// Filtra
 		$arrParams = array_map('trim', $arrParams);
 
@@ -49,7 +49,7 @@ class LoginCentral extends Zend_Controller_Action {
 		$objZendAuthResult = $objZendAuth->authenticate($objZendAuthAdapterDbTable);
 		if(!$objZendAuthResult->isValid()) {
 			$arrParams['erro'][] = 'Login inválido.';
-			$this->forward('login', null, null, $arrParams);
+			$this->_forward('login', null, null, $arrParams);
 			return;
 		}
 
@@ -65,7 +65,7 @@ class LoginCentral extends Zend_Controller_Action {
 
 		$this->_inicializa($objZendDbTableRowUsuario);
 
-		$this->getResponse()->setRedirect($this->view->url(array('controller' => 'contribuinte', 'action' => 'index'), null, true))->sendResponse();
+		$this->getResponse()->setRedirect($this->view->url(array('controller' => 'inicial', 'action' => 'index'), null, true))->sendResponse();
 	}
 	
 	private function _getAuthAdapter() {
