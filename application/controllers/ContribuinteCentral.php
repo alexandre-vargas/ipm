@@ -63,23 +63,26 @@ class ContribuinteCentral extends Zend_Controller_Action {
 	}
 	
 	public function inserirAction() {
+        Zend_Layout::getMvcInstance()->setLayout('logout');
+        /*
 		!Zend_Auth::getInstance()->hasIdentity() &&
 			Zend_Layout::getMvcInstance()->setLayout('logout');
+        */
 		$this->_helper->viewRenderer->setRender('form');
 
 		$this->objZendSessionNamespace->strAction = strtolower($this->getRequest()->getActionName());
-		
+
 		$arrParams = $this->getRequest()->getParams();
 		if(!Zend_Auth::getInstance()->hasIdentity()) {
 			$objZendSessionNamespaceCadastro = new Zend_Session_Namespace('cadastro');
 			$arrParams['inscricao_estadual'] = $objZendSessionNamespaceCadastro->intInscricaoEstadual;
 		}
 		$this->view->arrParams = $arrParams;
-		
+
 		$objZendDbTableRegime = Entity_Regime::getInstance();
 		$objZendDbTableRowsetRegime = $objZendDbTableRegime->fetchAll();
 		$this->view->objZendDbTableRowsetRegime = $objZendDbTableRowsetRegime;
-		
+
 		$objZendDbTableEstado = Entity_Estado::getInstance();
 		$objZendDbTableRowsetEstado = $objZendDbTableEstado->fetchAll();
 		$this->view->objZendDbTableRowsetEstado = $objZendDbTableRowsetEstado;

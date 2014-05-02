@@ -28,7 +28,7 @@ class LoginCentral extends Zend_Controller_Action {
 
 		// Recepciona.
 		$arrParams = $this->getRequest()->getParams();
-		
+
 		// Filtra
 		$arrParams = array_map('trim', $arrParams);
 
