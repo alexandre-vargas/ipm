@@ -33,10 +33,11 @@ class Bootstrap {
 		define('APPLICATION_PATH', BASE_PATH . DIRECTORY_SEPARATOR . 'application');
 		$arrHost = explode('.', $_SERVER['HTTP_HOST']);
 		define('PREFEITURA', $arrHost[0]);
-		
+
 		set_include_path(
 				get_include_path() .
-				
+                PATH_SEPARATOR . '/usr/share/php/ZendFramework-1.12.3/library/' .
+
 				PATH_SEPARATOR . APPLICATION_PATH . DIRECTORY_SEPARATOR . 'prefeituras' . DIRECTORY_SEPARATOR . PREFEITURA . DIRECTORY_SEPARATOR . 'models' . DIRECTORY_SEPARATOR .
 
 				PATH_SEPARATOR . APPLICATION_PATH . DIRECTORY_SEPARATOR . 'controllers' . DIRECTORY_SEPARATOR .

@@ -13,6 +13,7 @@ class Plugin_ViewSetupCentral extends Zend_Controller_Plugin_Abstract {
 		$objZendSessionNamespaceLogin = new Zend_Session_Namespace('login');
 		if(!isset($objZendSessionNamespaceLogin))
 			return;
+
 		$viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
 		$viewRenderer->init();
 		$view = $viewRenderer->view;
@@ -21,9 +22,9 @@ class Plugin_ViewSetupCentral extends Zend_Controller_Plugin_Abstract {
 	}
 	
 	protected function importaJavascriptCss($request) {
-		$strControllerName = strtolower($request->getControllerName());
+		!$strControllerName = strtolower($request->getControllerName());
 		$strActionName = strtolower($request->getActionName());
-		
+
 		$viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
 		$viewRenderer->init();
 		$view = $viewRenderer->view;

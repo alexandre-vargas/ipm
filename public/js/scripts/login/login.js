@@ -6,7 +6,7 @@ $(document).ready(function() {
 	};
 	$(window).resize(updateBoxPosition);
 	setTimeout(updateBoxPosition, 50);
-	
+
 	$('#usuario').keypress(verificaNumero);
-	
+
 });

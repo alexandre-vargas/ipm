@@ -8,7 +8,21 @@ class TesteCentral extends Zend_Controller_Action {
 	public function accessAction() {
 
 		try {
+            $driver = 'MDBTools';
+            $mdb_file = '/home/alexandre/Workspace/ipm/gia.mdb';
+            $dataSourceName = "odbc:Driver=$driver;DBQ=$mdb_file;";
+echo $dataSourceName;
+die;
+
+            $connection = new PDO($dataSourceName);
+
+echo "passou";
+die;
+
 			$rsc = odbc_connect("ACCESS_SAMPLE", '', 'kamisama2');
+print '<pre>';
+print_r($rsc);
+die;
 
 			$rscResult = odbc_exec($rsc, "select * from tblDetalhesInterUFs");
 
@@ -45,6 +59,7 @@ class TesteCentral extends Zend_Controller_Action {
 			die;
 		} catch (Exception $e) {
 			echo $e->getMessage();
+            die;
 		}
 		
 	}
