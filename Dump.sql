@@ -10384,3 +10384,22 @@ CREATE TABLE IF NOT EXISTS `usuario` (
 
 INSERT INTO `usuario` (`id`, `descri`, `senha`, `id_pessoa`, `status`, `log_data`, `log_usuario`) VALUES
 (1, '111', '698d51a19d8a121ce581499d7b701668', 1, 1, '2013-05-31 19:52:57', '');
+
+
+
+CREATE TABLE IF NOT EXISTS `cnae` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `descri` varchar(150) NOT NULL DEFAULT '',
+  `codigo` varchar(9) NOT NULL DEFAULT '',
+  `codigo_ini` varchar(6) NOT NULL DEFAULT '',
+  `codigo_fim`varchar(2) NOT NULL DEFAULT '',
+  `status` int(1) DEFAULT NULL,
+  `log_data` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `log_usuario` varchar(14) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UQ_ID` (`id`),
+  UNIQUE KEY `UQ_DESCRI` (`descri`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+
+)
