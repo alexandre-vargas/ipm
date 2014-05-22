@@ -1,23 +1,7 @@
-<br />
-<br />
-<br />
-<form enctype="multipart/form-data" action="/upload/salvar" method="POST"> 
-<fieldset>
-<legend>Área para retificação e envio de GIA para a prefeitura</legend>
-
-    Selecione o arquivo de GIA para upload: <br /><br />
-	<input name="uploadedfile" type="file" />
-    <br /><br />
-    <?php if(isset($_GET['msg']) && $_GET['erro'] == 0) echo "<span style='color:blue;'>".$_GET['msg']."</span>"; ?>
-    <?php if(isset($_GET['msg']) && $_GET['erro'] == 1) echo "<span style='color:red;'>".$_GET['msg']."</span>"; ?>
-    <br />
-    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
-    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-        &nbsp; &nbsp; &nbsp;
-    <input type="submit" value="Enviar GIA" />
-</fieldset>
+<form enctype="multipart/form-data" action="<?= $this->url(array('controller' => 'upload', 'action' => 'upload')); ?>" method="POST">
+    Envio de declaração para a prefeitura: <br /><br />
+	<input name="declaracao" type="file" />
+    <input type="hidden" name="MAX_FILE_SIZE" value="30000" />
+    <input type="submit" value="Enviar Declaração" />
 </form>
 

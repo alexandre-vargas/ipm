@@ -14,7 +14,8 @@ class Entity_PessoaCentral extends Zend_Db_Table_Abstract {
 	
 	protected $_dependentTables = array(
 			'Entity_Usuario',
-			'Entity_Contribuinte');
+			'Entity_Contribuinte',
+            'Entity_Gestor');
 
 	
 	

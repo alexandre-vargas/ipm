@@ -1,171 +1,47 @@
 <?php
 
-/**
- * 
- * Controller para upload e importação de GIA para o MySql
- * @author sigcorp - Felipe Santiago
- *
- */
-
 class UploadCentral extends Zend_Controller_Action {
-		
-	protected $objImportacaoControleModel;
-	protected $intIdControle;
-	protected $objZendConfig;
 	
+	private $_objZendSessionNamespace;
 	
-	/**
-	 * (non-PHPdoc)
-	 * @see Zend_Controller_Action::init()
-	 */
-	public function init() {		
-		$this->objImportacaoControleModel = Entity_ImportacaoCentral::getInstance();
-		$this->objZendConfig = Zend_Registry::get('config');
+	public function init() {
+		Zend_Layout::getMvcInstance()->setLayout('logout');
+		$this->_objZendSessionNamespace = new Zend_Session_Namespace(strtolower($this->getRequest()->getControllerName()), true);
 	}
 	
-	/**
-	 * 
-	 * Formulário de envio de arquivo
-	 */
 	public function indexAction() {
+        Zend_Auth::getInstance()->clearIdentity();
+        $this->_objZendSessionNamespace->unsetAll();
+
+        $this->view->arrSucesso = $this->_helper->FlashMessenger->getMessages();
+        $this->view->arrParams = $this->getRequest()->getParams();
 	}
 	
-	/**
-	 * 
-	 * Método para realizar o upload do arquivo de GIA
-	 */
-	public function salvarAction() {	
+    public function uploadAction() {
+        // Valida ação do usuário.
+        if(!$this->getRequest()->isPost())
+            throw new Zend_Controller_Request_Exception('Acesso não permitido através deste metodo.');
 
-		$strDirFile = $this->objZendConfig->batch->mysql->dir_processamento;
-				
-		$request = $this->getRequest();	
-		if(!$request->isPost()) 
-			return ;
-			
-		try	{
-			$adapter = new Zend_File_Transfer_Adapter_Http();
-			$adapter->addValidator('Count',false, array('min'=>1, 'max'=>3))
-					->addValidator('Size',false,array('max' => 10000000))
-					->addValidator('Extension',false,array('extension' => 'mdb','case' => true));
-				
-			$adapter->setDestination($strDirFile);
+        // Desabilita layout e view.
+        Zend_Layout::getMvcInstance()->disableLayout();
+        $this->getFrontController()->setParam('noViewRenderer', true);
 
-			$file = $adapter->getFileInfo();
-			$strNameFile = $file['uploadedfile']['name'];
-					
-			if(($adapter->isUploaded($strNameFile))&& ($adapter->isValid($strNameFile))) {
-				$adapter->receive($strNameFile);
+        /*
+        if(!file_exists($strDirDestino))
+            mkdir($strDirDestino);
+        */
 
-				$arrNameFile = explode('.mdb', $strNameFile);
-				$strUniqID = uniqid(); 
-				$strUniNameFile = "{$arrNameFile[0]}_{$strUniqID}.mdb";
-				
-				rename("{$strDirFile}{$strNameFile}", "{$strDirFile}{$strUniNameFile}");
+        $strPathArquivoTmp = $_FILES['declaracao']['tmp_name'];
 
-				$this->objImportacaoControleModel->registraDiretorioArquivoControleImportacao($strDirFile, $strUniNameFile);
+        $arrPathArquivoTmp = explode('/', $strPathArquivoTmp);
+        $arrPathArquivoTmpInvertido = array_reverse($arrPathArquivoTmp);
+        $strArquivoTmp = $arrPathArquivoTmpInvertido[0];
+        $strPathArquivoDestino = Zend_Registry::get('config')->path->gia->processo_2 . $strArquivoTmp;
 
-				$this->intIdControle = $this->objImportacaoControleModel->getLastInsertID();
+        move_uploaded_file($strPathArquivoTmp, $strPathArquivoDestino);
 
-				$this->objImportacaoControleModel->insereHistorico($this->intIdControle, Entity_ImportacaoCentral::$intNumOrdem, 'PROC_IMP_MYSQL');
-				Entity_ImportacaoCentral::$intNumOrdem++;
-					
-				$this->intIdControleStatus = $this->objImportacaoControleModel->getLastInsertID();
+        $this->_helper->FlashMessenger->addMessage('Declaração enviada com sucesso. Caso exista algum problema com o arquivo entraremos em contato. Obrigado.');
+        $this->getResponse()->setRedirect($this->view->url(array('controller' => 'upload', 'action' => 'index'), null, true))->sendResponse();
+    }
 
-				$this->objImportacaoControleModel->atualizaHistorico($this->intIdControleStatus );
-				
-				if(!$this->exportaCSV($strDirFile, $strUniNameFile, $strUniqID, $this->intIdControle))
-					return ;
-
-				if(!$this->objImportacaoControleModel->importaArquivosMySql($strDirFile, $strUniNameFile, $strUniqID, $this->intIdControle))
-					return ;	
-	
-				$this->_redirect('upload/index?msg=Upload Realizado com Sucesso!&erro=0');
-			}		
-			$this->_redirect('upload/index?msg=Arquivo Invalido!&erro=1');
-		} catch (Exception $ex) {
-			$strErro = print_r($ex, true);
-			$this->objImportacaoControleModel->atualizaHistorico($this->intIdControleStatus, $strErro);
-		}
-	}
-	
-	/**
-	 * 
-	 * Método para ler o arquivo de GIA (.mdb) e gerar arquivos (.csv) 
-	 * @param String $strDirFile - diretório dos arquivos a serem importados 
-	 * @param String $strFileName - nome do arquivo a origem (MDB)
-	 * @param String $strUniqID - hash único do nome do arquivo 
-	 */
-	private function exportaCSV($strDirFile, $strFileName, $strUniqID = '', $idControle) {			
-		$this->objImportacaoControleModel->insereHistorico($idControle, Entity_ImportacaoCentral::$intNumOrdem, 'PROC_IMP_MYSQL');
-		$intIdHistoricoExportacao = $this->objImportacaoControleModel->getLastInsertID();		
-		Entity_ImportacaoCentral::$intNumOrdem++;
-		
-		$boolCommandExport = true;
-		
-		$this->objImportacaoControleModel->insereHistorico($idControle, Entity_ImportacaoCentral::$intNumOrdem, 'PROC_IMP_MYSQL');
-		$intIdHistorico = $this->objImportacaoControleModel->getLastInsertID();		
-		Entity_ImportacaoCentral::$intNumOrdem++;
-		
-		if (!is_null(shell_exec("mdb-export {$strDirFile}{$strFileName} tblContribuinte > {$strDirFile}contribuinte_{$strUniqID}.csv")))
-			$boolCommandExport = false;
-		$this->objImportacaoControleModel->atualizaHistorico($intIdHistorico);
-		
-		$this->objImportacaoControleModel->insereHistorico($idControle, Entity_ImportacaoCentral::$intNumOrdem, 'PROC_IMP_MYSQL');
-		$intIdHistorico = $this->objImportacaoControleModel->getLastInsertID();		
-		Entity_ImportacaoCentral::$intNumOrdem++;
-		
-		if (!is_null(shell_exec("mdb-export {$strDirFile}{$strFileName} tblDetalhesCFOPs > {$strDirFile}detalhes_cfops_{$strUniqID}.csv")))
-			$boolCommandExport = false;
-		$this->objImportacaoControleModel->atualizaHistorico($intIdHistorico);
-
-		$this->objImportacaoControleModel->insereHistorico($idControle, Entity_ImportacaoCentral::$intNumOrdem, 'PROC_IMP_MYSQL');
-		$intIdHistorico = $this->objImportacaoControleModel->getLastInsertID();		
-		Entity_ImportacaoCentral::$intNumOrdem++;
-		
-		if (!is_null(shell_exec("mdb-export {$strDirFile}{$strFileName} tblDetalhesInterUFs > {$strDirFile}detalhes_inter_ufs_{$strUniqID}.csv")))
-			$boolCommandExport = false;
-		$this->objImportacaoControleModel->atualizaHistorico($intIdHistorico);
-
-		$this->objImportacaoControleModel->insereHistorico($idControle, Entity_ImportacaoCentral::$intNumOrdem, 'PROC_IMP_MYSQL');
-		$intIdHistorico = $this->objImportacaoControleModel->getLastInsertID();
-		Entity_ImportacaoCentral::$intNumOrdem++;
-		
-		if (!is_null(shell_exec("mdb-export {$strDirFile}{$strFileName} tblGIA > {$strDirFile}gia_{$strUniqID}.csv")))
-			$boolCommandExport = false;	
-		$this->objImportacaoControleModel->atualizaHistorico($intIdHistorico);
-		
-		$this->objImportacaoControleModel->insereHistorico($idControle, Entity_ImportacaoCentral::$intNumOrdem, 'PROC_IMP_MYSQL');
-		$intIdHistorico = $this->objImportacaoControleModel->getLastInsertID();
-		Entity_ImportacaoCentral::$intNumOrdem++;
-		
-		if (!is_null(shell_exec("mdb-export {$strDirFile}{$strFileName} tblIEsRemetente > {$strDirFile}ies_remetente_{$strUniqID}.csv")))
-			$boolCommandExport = false;		
-		$this->objImportacaoControleModel->atualizaHistorico($intIdHistorico);
-		
-		$this->objImportacaoControleModel->insereHistorico($idControle, Entity_ImportacaoCentral::$intNumOrdem, 'PROC_IMP_MYSQL');
-		$intIdHistorico = $this->objImportacaoControleModel->getLastInsertID();
-		Entity_ImportacaoCentral::$intNumOrdem++;
-		
-		if (!is_null(shell_exec("mdb-export {$strDirFile}{$strFileName} tblOcorrências > {$strDirFile}ocorrencias_{$strUniqID}.csv")))
-			$boolCommandExport = false;				
-		$this->objImportacaoControleModel->atualizaHistorico($intIdHistorico);
-
-		$this->objImportacaoControleModel->insereHistorico($idControle, Entity_ImportacaoCentral::$intNumOrdem, 'PROC_IMP_MYSQL');
-		$intIdHistorico = $this->objImportacaoControleModel->getLastInsertID();
-		Entity_ImportacaoCentral::$intNumOrdem++;
-		
-		if (!is_null(shell_exec("mdb-export {$strDirFile}{$strFileName} tblVersão > {$strDirFile}versao_{$strUniqID}.csv")))
-			$boolCommandExport = false;		
-		$this->objImportacaoControleModel->atualizaHistorico($intIdHistorico);
-			
-		if(!$boolCommandExport) 
-			return ;
-			
-		$this->objImportacaoControleModel->atualizaHistorico($intIdHistoricoExportacao);
-		
-		return $boolCommandExport;		
-		//then, store links etc in db for retrieval later..		
-	}
-	
-	
 }
