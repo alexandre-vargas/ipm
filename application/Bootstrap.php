@@ -68,7 +68,8 @@ class Bootstrap {
 		$objZendDbAdapterPDOMysql = Zend_Db::factory(Zend_Registry::get('config')->resources->db);
 		Zend_Db_Table::setDefaultAdapter($objZendDbAdapterPDOMysql);
 		Zend_Registry::set('db', $objZendDbAdapterPDOMysql);
-		
-		$objZendControllerFront->dispatch();
+
+        $objZendControllerFront->dispatch();
+
 	}
 }

@@ -14,7 +14,7 @@
 </div>
 
 
-<?php 
+<?php
 if (Zend_Registry::get('config')->ambiente == 'localhost' || Zend_Registry::get('config')->ambiente == 'desenvolvimento') { ?>
 	<h3>Exception information:</h3>
 	<p>
@@ -29,6 +29,6 @@ if (Zend_Registry::get('config')->ambiente == 'localhost' || Zend_Registry::get(
 	<pre>
 		<?php echo $this->exception->getTraceAsString() ?>
 	</pre>
-<?php  
+<?php
 } ?>
 

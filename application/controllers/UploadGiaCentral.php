@@ -1,6 +1,6 @@
 <?php
 
-class UploadCentral extends Zend_Controller_Action {
+class UploadGiaCentral extends Zend_Controller_Action {
 	
 	private $_objZendSessionNamespace;
 	
@@ -30,7 +30,6 @@ class UploadCentral extends Zend_Controller_Action {
         if(!file_exists($strDirDestino))
             mkdir($strDirDestino);
         */
-
         $strPathArquivoTmp = $_FILES['declaracao']['tmp_name'];
 
         $arrPathArquivoTmp = explode('/', $strPathArquivoTmp);

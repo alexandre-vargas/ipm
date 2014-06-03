@@ -5,6 +5,9 @@ class ErrorCentral extends Zend_Controller_Action
 		// Zend_Layout::getMvcInstance()->disableLayout();
 		$errors = $this->_getParam('error_handler');
 
+print '<pre>';
+print_r($errors->exception);
+die;
 		switch ($errors->type) {
 			case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_ROUTE:
 			case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_CONTROLLER:
@@ -26,7 +29,7 @@ class ErrorCentral extends Zend_Controller_Action
 		$this->view->env = dirname(dirname(__FILE__));
 		$this->view->exception = $errors->exception;
 		$this->view->request = $errors->request;
-		
+
 		$this->view->objRegistry = Zend_Registry::get('config');
 	}
 }

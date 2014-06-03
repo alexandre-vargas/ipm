@@ -1,0 +1,19 @@
+drop table declaracao_gia_apuracao_operacoes_proprias;
+drop table declaracao_gia_apuracao_substituicao_tributaria;
+drop table declaracao_gia_contribuinte;
+drop table declaracao_gia_detalhes_cfops;
+drop table declaracao_gia_detalhes_inter_ufs;
+drop table declaracao_gia_dipam;
+drop table declaracao_gia_gia;
+drop table declaracao_gia_ies_remetente;
+drop table declaracao_gia_ie_substituido;
+drop table declaracao_gia_ie_substituto;
+drop table declaracao_gia_ocorrencias;
+drop table declaracao_gia_pagamento;
+drop table declaracao_gia_recibos_credito;
+drop table declaracao_gia_registro_exportacao;
+drop table declaracao_gia_resumo_cfops_entradas;
+drop table declaracao_gia_resumo_cfops_saidas;
+drop table declaracao_gia_versao;
+drop table declaracao_gia_zfm_alc;
+
