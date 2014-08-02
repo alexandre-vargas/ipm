@@ -1,0 +1,94 @@
+<!-- <th>Texto alinhado à esquerda</th> -->
+<!-- <th style="text-align: center;">Texto alinhado no centro</th> -->
+
+<table class="table table-striped table-bordered" border="0">
+
+    <thead>
+    <tr>
+        <th>Nro GIA</th>
+        <th>IE</th>
+        <th>Tipo</th>
+        <th>RegTrib</th>
+        <th>Ref1</th>
+        <th>Ref2</th>
+        <th>Movimento</th>
+        <th>Saldo Credor</th>
+        <th>Saldo Cred Ant Dig</th>
+        <th>Transmitida</th>
+        <th>Deduções RPA</th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+    </tr>
+    </thead>
+
+
+    <?php
+    /*Array
+    (
+        [id] => 41
+        [novo_nome_arquivo] => phpIUwszH-new.mdb
+        [nro_gia] => 1
+        [ie] => 374.117.298.113
+        [tipo] => 1
+        [reg_trib] => 01
+        [ref1] => 2011-11-20 00:00:00
+        [ref2] => 0000-00-00 00:00:00
+        [movimento] => 1
+        [saldo_credor] => 0.0000
+        [saldo_cred_ant_dig] => 291281.6100
+        [transmitida] => 1
+        [deducoes_rpa] => 0.0000
+        [icms_fix_per_res] => 0.0000
+        [outras_res] => 0.0000
+        [saldo_credor_st] => 0.0000
+        [saldo_credor_ant_dig_st] => 0.0000
+        [deducoes_st] => 0.0000
+        [origem] => 00640715000109
+        [origem_pref_dig] => 1
+        [consistente] => 1
+        [data_transmissao] => 2011-12-15 00:00:00
+        [data_geracao_substitutiva] => 0000-00-00 00:00:00
+        [data_geracao_coligida] => 0000-00-00 00:00:00
+        [autenticacao] => a8ddf3231dec3a79678f7cbc4f3319bd
+        [chave_interna] =>
+        [log_data] => 2014-06-11 15:48:10
+    )*/
+    ?>
+
+<?php
+if(!(boolean)$this->intQtdPages) {
+    print '
+				<tbody><tr><td colspan="7" style="text-align: center;"> <b> --- Sem resultado --- </b> </td></tr></tbody>';
+} else {
+    ?>
+    <tbody>
+    <?php
+    foreach($this->objZendDbStatmentPdo as $arrRow) {
+    ?>
+        <tr>
+            <td><?=$arrRow['']?></td>
+
+    <?php
+    }
+    ?>
+
+</table>
+
+
+<?php
+foreach($this->objZendDbStatmentPdo as $arrRow) {
+    print '<pre>';
+    print_r($arrRow);
+    die;
+}

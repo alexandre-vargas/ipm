@@ -22,19 +22,6 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `componente`
---
-
-CREATE TABLE IF NOT EXISTS `componente` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `descri` varchar(50) NOT NULL,
-  `peso` float NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `UQ_ID` (`id`),
-  UNIQUE KEY `UQ_DESCRI` (`descri`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
---
 -- Extraindo dados da tabela `componente`
 --
 
@@ -49,20 +36,6 @@ INSERT INTO `componente` (`id`, `descri`, `peso`) VALUES
 
 -- --------------------------------------------------------
 
---
--- Estrutura da tabela `contador`
---
-
-CREATE TABLE IF NOT EXISTS `contador` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `id_pessoa` int(11) NOT NULL,
-  `crc` varchar(100) NOT NULL,
-  `data_crc` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `log_data` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `log_usuario` varchar(14) NOT NULL,
-  `status` int(1) unsigned NOT NULL DEFAULT 1,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 --
 -- Extraindo dados da tabela `contador`
@@ -74,78 +47,11 @@ INSERT INTO `contador` (`id`, `id_pessoa`, `crc`, `data_crc`, `log_data`, `log_u
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `contribuinte`
---
-
-/*
- @TODO - Criar tabela que relaciona Contribuinte com CNAE
-  */
-
-CREATE TABLE IF NOT EXISTS `gestor` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `id_pessoa` int(11) NOT NULL,
-  `id_municipio` int(11) NOT NULL,
-  `cargo` varchar(200) NOT NULL,
-  `log_data` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `log_usuario` varchar(14) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`),
-  KEY `IDX_ID_PESSOA` (`id_pessoa`),
-  KEY `FK_ID_MUNICIPIO` (`id_municipio`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
-
-CREATE TABLE IF NOT EXISTS `contribuinte` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `id_pessoa` int(11) NOT NULL,
-  `ano_base` varchar(4) NOT NULL,
-  `id_regime` int(10) NOT NULL DEFAULT '0',
-  `data_inicio_regime` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `inscricao_estadual` varchar(20) NOT NULL DEFAULT '0',
-  `origem` int(1) NOT NULL COMMENT '1- Lote, 2- CRUD',
-  `status` int(1) NOT NULL DEFAULT '0' COMMENT '0-Pendente, 1- Aprovado, 2- Não Aprovado',
-  `cadastro_complementado` int(1) NOT NULL DEFAULT '0' COMMENT '0 -Não atualizado 1 -Atualizado',
-  `data_inicio_atividade` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `log_data` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `log_usuario` varchar(14) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`),
-  KEY `IDX_ID_PESSOA` (`id_pessoa`),
-  KEY `FK_ID_REGIME` (`id_regime`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
-
---
--- Estrutura da tabela `email`
---
-
-CREATE TABLE IF NOT EXISTS `email` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `conteudo` text NOT NULL,
-  `assunto` varchar(200) NOT NULL,
-  `destino` varchar(150) NOT NULL,
-  `cc` text,
-  `status` int(1) NOT NULL DEFAULT '0',
-  `log_data` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `log_usuario` varchar(14) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
---
 -- Extraindo dados da tabela `email`
 --
 
 
 -- --------------------------------------------------------
-
---
--- Estrutura da tabela `esqueci_minha_senha`
---
-
-CREATE TABLE IF NOT EXISTS `esqueci_minha_senha` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `id_usuario` int(14) NOT NULL DEFAULT '0',
-  `senha` varchar(32) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 --
 -- Extraindo dados da tabela `esqueci_minha_senha`
@@ -155,20 +61,6 @@ INSERT INTO `esqueci_minha_senha` (`id`, `id_usuario`, `senha`) VALUES
 (6, 1, '79021606');
 
 -- --------------------------------------------------------
-
---
--- Estrutura da tabela `estado`
---
-
-CREATE TABLE IF NOT EXISTS `estado` (
-  `id` varchar(2) NOT NULL,
-  `codigo_prodesp` varchar(2) NOT NULL,
-  `descri` varchar(150) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `UQ_ID` (`id`),
-  UNIQUE KEY `UQ_CODIGO_PRODESP` (`codigo_prodesp`),
-  UNIQUE KEY `UQ_DESCRI` (`descri`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 --
 -- Extraindo dados da tabela `estado`
@@ -206,23 +98,6 @@ INSERT INTO `estado` (`id`, `codigo_prodesp`, `descri`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `lote_estado`
---
-
-CREATE TABLE IF NOT EXISTS `lote_estado` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nome_arquivo` varchar(200) NOT NULL,
-  `data_inicio` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `data_fim` timestamp NULL DEFAULT '0000-00-00 00:00:00',
-  `log_data` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `log_usuario` varchar(14) NOT NULL,
-  `qtd_importados` int(11) unsigned NOT NULL DEFAULT '0',
-  `qtd_total` int(11) unsigned NOT NULL DEFAULT '0',
-  `qtd_nao_importados` int(11) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
---
 -- Extraindo dados da tabela `lote_estado`
 --
 
@@ -233,19 +108,6 @@ INSERT INTO `lote_estado` (`id`, `nome_arquivo`, `data_inicio`, `data_fim`, `log
 (49, '2013_111_2013-06-02-22-32-03_160-DIPAM-CAD-2011-ITAPIRA.txt', '2013-06-02 19:32:03', '2013-06-02 19:32:24', '2013-06-02 19:32:24', '111', 0, 3119, 3119);
 
 -- --------------------------------------------------------
-
---
--- Estrutura da tabela `lote_estado_contribuinte`
---
-
-CREATE TABLE IF NOT EXISTS `lote_estado_contribuinte` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `id_lote` int(11) NOT NULL,
-  `id_contribuinte` int(11) NOT NULL,
-  `log_data` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `log_usuario` varchar(14) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 --
 -- Extraindo dados da tabela `lote_estado_contribuinte`
@@ -3377,20 +3239,6 @@ INSERT INTO `lote_estado_contribuinte` (`id`, `id_lote`, `id_contribuinte`, `log
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `municipio`
---
-
-CREATE TABLE IF NOT EXISTS `municipio` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `codigo_orgao_estado` int(11) NOT NULL,
-  `id_estado` varchar(2) NOT NULL,
-  `descri` varchar(150) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `UQ_ID` (`id`),
-  UNIQUE KEY `UQ_CODIGO_ORGAO_ESTADO` (`codigo_orgao_estado`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
---
 -- Extraindo dados da tabela `municipio`
 --
 
@@ -4043,38 +3891,12 @@ INSERT INTO `municipio` (`id`, `codigo_orgao_estado`, `id_estado`, `descri`) VAL
 
 -- --------------------------------------------------------
 
---
--- Estrutura da tabela `pessoa`
---
 
-CREATE TABLE IF NOT EXISTS `pessoa` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `descri` varchar(200) DEFAULT '',
-  `cpf_cnpj` varchar(14) NOT NULL DEFAULT '' COMMENT 'CPF/CNPJ nao pode ser Unique pois este campo pode se repetir em alguns casos como por exemplo no lote de Itapira de 2011',
-  `cep` varchar(8) NULL DEFAULT '',
-  `tipo_logradouro` varchar(30) NULL DEFAULT '',
-  `logradouro` varchar(200) NULL DEFAULT '',
-  `numero` int(11) DEFAULT NULL,
-  `complemento` varchar(50) DEFAULT NULL,
-  `bairro` varchar(150) NULL DEFAULT '',
-  `id_municipio` int(11) NULL DEFAULT 0,
-  `municipio` varchar(100) NULL DEFAULT '',
-  `estado` varchar(2) NULL,
-  `email` varchar(150) DEFAULT NULL,
-  `log_data` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `log_usuario` varchar(14) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `UQ_ID` (`id`),
-  KEY `FK_ID_MUNICIPIO` (`id_municipio`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
-insert into pessoa values (1, 'Alexandre Vargas', '30487276809', null, null, null, null, null, null, null, null, null, 'alexandremv@gmail.com', null, 'alexandre');
 --
 -- Extraindo dados da tabela `pessoa`
 --
 
 INSERT INTO `pessoa` (`id`, `descri`, `cpf_cnpj`, `cep`, `tipo_logradouro`, `logradouro`, `numero`, `complemento`, `bairro`, `id_municipio`, `municipio`, `estado`, `email`, `log_data`, `log_usuario`) VALUES
-(1, '444', '44444444444444', '44444444', '444', '444', 444, '', '444', 871, 'ITAPIRA', 'SP', 'teste4@teste.com.br', '2013-06-03 14:52:58', '111'),
 (6940, 'FRUGOLI LANCHONETE DANCANTE LTDA  ME', '12076574000122', '13976211', 'RUA', 'ARGEMIRO SALLES', 48, '', 'DELLA ROCH', 871, 'ITAPIRA', 'SP', 'alexandremv@gmail.com', '2013-06-02 19:19:13', ''),
 (6943, 'ITALICA DO BRASIL COMERCIO DE EQUIPAMENT', '12098838000149', '13974657', 'RUA ', 'SENADOR VERGUEIRO   ', 60, '     ', 'V BAZANI  ', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:19:13', '111'),
 (6944, 'MECANICA VASSOL INDUSTRIA E COMERCIO LTD', '49914385000191', '13972170', 'AV  ', 'COMENDADOR VIRGOLINO', 75, '     ', 'V IZAURA  ', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:19:13', '111'),
@@ -4869,7 +4691,7 @@ INSERT INTO `pessoa` (`id`, `descri`, `cpf_cnpj`, `cep`, `tipo_logradouro`, `log
 (7730, 'JOSE ROBERTO CAVARZAN                   ', '08577802000413', '13970970', 'SIT ', 'SANTA LUZIA         ', 0, '     ', 'VIOLANTA  ', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:20:24', '111'),
 (7731, 'E G  PAISAGISMO E DECORACAO LTDA   ME   ', '12411801000129', '13974070', 'AV  ', 'PAOLETTI            ', 374, '     ', 'SANTA CRUZ', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:20:24', '111'),
 (7732, 'SOLANGE APARECIDA NICOLETI   ME         ', '12411841000170', '13972320', 'RUA ', 'CONSELHEIRO LAURINDO', 241, '     ', 'CUBATAO   ', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:20:24', '111'),
-(7733, 'ADALTO COSTA DE OLIVEIRA E OUTRO        ', '12420215000140', '13970970', 'SIT ', 'POUSADA - GLEBA 8   ', 0, '     ', 'BRUMADO   ', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:20:24', '111'),
+(7733, 'ADALTO COSTA DE OLIVEIRA E OUTRO        ', '12420215000140', '13970970', 'SIT ', 'POUSADA', 'GLEBA 8   ', 0, '     ', 'BRUMADO   ', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:20:24', '111'),
 (7734, 'VIRGINIO BOER NETO E OUTROS             ', '12423973000112', '13970970', 'SIT ', 'RETIRO DAS AGUAS TUR', 0, '     ', 'VIOLANTA  ', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:20:24', '111'),
 (7735, 'NUNES & OLIVEIRA COMERCIO DE MATERIAIS P', '12434027000171', '13973255', 'AV  ', 'BRASIL              ', 39, '     ', 'PQ FELICID', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:20:24', '111'),
 (7736, 'SUPERMERCADO TOPAN LTDA    EPP          ', '12434138000188', '13973733', 'RUA ', 'VEREADOR ANIZIO BECU', 5, '     ', 'LOT  POP  ', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:20:24', '111'),
@@ -5060,7 +4882,7 @@ INSERT INTO `pessoa` (`id`, `descri`, `cpf_cnpj`, `cep`, `tipo_logradouro`, `log
 (7921, 'JULIANA BAPTISTA   ME                   ', '13739796000140', '13972141', 'AV  ', 'BRASILIA            ', 359, '     ', 'JDM IVETE ', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:20:40', '111'),
 (7922, 'CAMPESTRINI & NORBIATO COMERCIO DE ROUPA', '13746005000100', '13972141', 'AV  ', 'BRASILIA            ', 155, '     ', 'JDM IVETE ', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:20:40', '111'),
 (7923, 'PUGINA & ROSE LTDA   ME                 ', '13747033000141', '13970070', 'AV  ', 'RIO BRANCO          ', 650, 'A    ', 'CENTRO    ', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:20:40', '111'),
-(7924, 'SITIO SAO JOSE - JOAO MARCAL DOS SANTOS ', '13764784000176', '13970970', 'SIT ', 'SAO JOSE            ', 0, 'GLEBA', 'BARAO ATAL', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:20:40', '111'),
+(7924, 'SITIO SAO JOSE', 'JOAO MARCAL DOS SANTOS ', '13764784000176', '13970970', 'SIT ', 'SAO JOSE            ', 0, 'GLEBA', 'BARAO ATAL', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:20:40', '111'),
 (7925, 'LUIS ANTONIO ROMANO JUNIOR   ME         ', '13766042000180', '13972343', 'RUA ', 'MILICO              ', 185, '     ', 'CUBATAO   ', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:20:40', '111'),
 (7926, 'JOSE ROBERTO GOTTI                      ', '13771991000158', '13970970', 'SIT ', 'PRIMAVERA           ', 0, '     ', 'MACUCOS   ', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:20:40', '111'),
 (7927, 'REDE CAMPINAS DE COMUNICACAO LTDA       ', '08203396000186', '13970005', 'PCA ', 'BERNARDINO DE CAMPOS', 184, 'SALAS', 'CENTRO    ', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:20:40', '111'),
@@ -5289,7 +5111,7 @@ INSERT INTO `pessoa` (`id`, `descri`, `cpf_cnpj`, `cep`, `tipo_logradouro`, `log
 (8149, 'SUPERMERCADO ZEFERINO LTDA              ', '69093011000321', '13970210', 'RUA ', 'RUI BARBOSA         ', 270, '     ', 'CENTRO    ', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:21:01', '111'),
 (8150, 'ECOLETOR COMERCIO DE MAQUINAS AGRICOLAS ', '04415854000190', '13973450', 'RUA ', 'FRANCISCO OLIVEIRA J', 303, '     ', 'JDM PARAIS', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:21:01', '111'),
 (8151, 'BENEDITO V CARVALHO ME                  ', '57085870000128', '13972480', 'RUA ', 'ITALIA              ', 472, '     ', 'JDM RAQUEL', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:21:01', '111'),
-(8152, 'MONICA APARECIDA SOLIANI - ME           ', '04258065000192', '13973090', 'RUA ', 'LINDOIA             ', 713, 'FREN ', 'PRADOS    ', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:21:02', '111'),
+(8152, 'MONICA APARECIDA SOLIANI', 'ME           ', '04258065000192', '13973090', 'RUA ', 'LINDOIA             ', 713, 'FREN ', 'PRADOS    ', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:21:02', '111'),
 (8153, 'PEGORARI   COMERCIAL DE FERRAMENTAS LTDA', '04458718000187', '13974390', 'RUA ', 'DR FRANCISCO DE PAUL', 695, '     ', 'SANTA CRUZ', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:21:02', '111'),
 (8154, 'B  L  AUTO PECAS LTDA  ME               ', '04499855000160', '13971121', 'RUA ', 'PROFESSORA MARIA AUG', 408, '     ', 'V PENHA DO', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:21:02', '111'),
 (8155, '3 1 MALHAS ITAPIRA LTDA ME              ', '04505785000105', '13972264', 'RUA ', 'CARMELA GALLI PAPALE', 31, 'FDS  ', 'JDM TROPIC', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:21:02', '111'),
@@ -5477,7 +5299,7 @@ INSERT INTO `pessoa` (`id`, `descri`, `cpf_cnpj`, `cep`, `tipo_logradouro`, `log
 (8336, 'JOEL LOPES DA SILVA   RADIADORES   ME   ', '05863587000186', '13976030', 'RUA ', 'ARI WILSON CREMASCO ', 127, '     ', 'JDM SOARES', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:21:18', '111'),
 (8337, 'EDERSON CASSIANO BOLOGNA   ME           ', '05797443000179', '13970160', 'RUA ', 'COMENDADOR JOAO CINT', 398, '     ', 'CENTRO    ', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:21:18', '111'),
 (8338, 'CESAR MARTINS GARCIA CANTINA   ME       ', '05922561000161', '13970450', 'RUA ', 'DR HORTENCIO PEREIRA', 313, 'CANTI', 'V PEREIRA ', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:21:18', '111'),
-(8339, 'CELIA REGINA ZANIBONI - MOVEIS - ME     ', '05922441000164', '13971110', 'RUA ', 'ANTONIO ALVES DE CAM', 60, '     ', 'PENHA RIO ', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:21:18', '111'),
+(8339, 'CELIA REGINA ZANIBONI', 'MOVEIS', 'ME     ', '05922441000164', '13971110', 'RUA ', 'ANTONIO ALVES DE CAM', 60, '     ', 'PENHA RIO ', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:21:18', '111'),
 (8340, 'EVA MARTINS CONSORTI   ME               ', '05896851000188', '13974500', 'RUA ', '24 DE OUTUBRO       ', 156, '     ', 'CENTRO    ', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:21:18', '111'),
 (8341, 'ARANHA BARBOSA COMERCIO EXPORTACAO E IMP', '05829782000190', '13974366', 'ROD ', 'ROD SP 147 KM 35    ', 0, 'FAZEN', 'AGUAS CLAR', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:21:18', '111'),
 (8342, 'ARNALDO A  DE OLIVEIRA   ME             ', '05954690000131', '13974340', 'RUA ', 'RUI BARBOSA         ', 875, '     ', 'CENTRO    ', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:21:18', '111'),
@@ -5713,8 +5535,8 @@ INSERT INTO `pessoa` (`id`, `descri`, `cpf_cnpj`, `cep`, `tipo_logradouro`, `log
 (8571, 'DROGARIA GOMES & SILVA LTDA  ME         ', '07818054000108', '13974901', 'AV  ', 'JACAREI             ', 110, '     ', 'BELA VISTA', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:21:39', '111'),
 (8572, 'FATOON COMERCIO DE PRODUTOS DE INFORMATI', '07867451000170', '13970346', 'RUA ', 'MANOEL PEREIRA      ', 540, '     ', 'SANTO ANTO', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:21:39', '111'),
 (8573, 'JOSE ALBERTO BREDA                      ', '07900520000108', '13970970', 'SIT ', 'SANTA HELENA        ', 0, '     ', 'BAIRRO DO ', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:21:39', '111'),
-(8574, 'VERGINIO SCARPIONI                      ', '07915763000101', '13974904', 'FAZ ', 'SAO JOSE - QUINHAO 3', 0, '     ', 'PONTE NOVA', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:21:39', '111'),
-(8575, 'ACHILES SCARPIONI E OUTRO               ', '07915769000189', '13974904', 'FAZ ', 'SAO JOSE - QUINHAO 0', 0, '     ', 'PONTE NOVA', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:21:39', '111'),
+(8574, 'VERGINIO SCARPIONI                      ', '07915763000101', '13974904', 'FAZ ', 'SAO JOSE', 'QUINHAO 3', 0, '     ', 'PONTE NOVA', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:21:39', '111'),
+(8575, 'ACHILES SCARPIONI E OUTRO               ', '07915769000189', '13974904', 'FAZ ', 'SAO JOSE', 'QUINHAO 0', 0, '     ', 'PONTE NOVA', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:21:39', '111'),
 (8576, 'JOSE BREDA FILHO                        ', '07915906000185', '13970970', 'SIT ', 'TRES LAGOAS         ', 0, '     ', 'SANTA CRUZ', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:21:39', '111'),
 (8577, 'DECIO NOGUEIRA                          ', '07915936000191', '13970970', 'FAZ ', 'RODOVIA ITAPIRA A JA', 0, 'FAZEN', 'BARAO ATAL', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:21:39', '111'),
 (8578, 'JOSE ANTONIO MARTELLI                   ', '07916228000175', '13970970', 'SIT ', 'JOAICI              ', 0, '     ', 'RIO DO PEI', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:21:39', '111'),
@@ -5982,7 +5804,7 @@ INSERT INTO `pessoa` (`id`, `descri`, `cpf_cnpj`, `cep`, `tipo_logradouro`, `log
 (8839, 'MARIO APARECIDO FUINI                   ', '08523560000132', '13970970', 'SIT ', 'SAO LUIZ            ', 0, '     ', 'BOA VISTA ', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:22:04', '111'),
 (8840, 'JOSE WILSON ZANCHETTA E OUTRA           ', '08521899000108', '13970970', 'SIT ', 'JURIBA              ', 0, '     ', 'DA PONTE N', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:22:04', '111'),
 (8841, 'JOSE GUERREIRO TORRES                   ', '08526960000100', '13970970', 'ESTR', 'MUNICIPAL DO BAIRRO ', 0, 'FAZEN', 'SAO PEDRO ', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:22:04', '111'),
-(8842, 'GERALDO ROBERTO LEFOSSE JUNIOR          ', '08526916000191', '13970970', 'ROD ', 'SP 147 - ITAPIRA/LIN', 0, 'KM   ', 'PONTE NOVA', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:22:04', '111'),
+(8842, 'GERALDO ROBERTO LEFOSSE JUNIOR          ', '08526916000191', '13970970', 'ROD ', 'SP 147', 'ITAPIRA/LIN', 0, 'KM   ', 'PONTE NOVA', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:22:04', '111'),
 (8843, 'ANTONIO SEBASTIAO BORDIGNON             ', '08526906000156', '13970970', 'SIT ', 'VARGEM GRANDE       ', 0, 'RURAL', 'RURAL VIOL', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:22:04', '111'),
 (8844, 'MAURO FINELLI E OUTROS                  ', '08523850000186', '13970970', 'CH  ', 'SANTA ISABEL        ', 0, '     ', 'DOS PINHEI', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:22:05', '111'),
 (8845, 'ESTEVAM ZAMBOM                          ', '08526676000125', '13970970', 'ROD ', 'ITAPIRA/MOGI GUAU   ', 0, 'KM 6 ', 'RIO MANSO ', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:22:05', '111'),
@@ -6020,11 +5842,11 @@ INSERT INTO `pessoa` (`id`, `descri`, `cpf_cnpj`, `cep`, `tipo_logradouro`, `log
 (8877, 'SONIA MARIA SARTORELLI SOARES E OUTROS  ', '08564719000167', '13970260', 'FAZ ', 'VIOLANTA            ', 0, '     ', 'VIOLANTA  ', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:22:08', '111'),
 (8878, 'CARLOS MARTINS E OUTROS                 ', '08565008000107', '13970970', 'SIT ', 'COTIAS              ', 0, '     ', 'COTIAS    ', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:22:08', '111'),
 (8879, 'ADEMAR MIQUELINI                        ', '08565295000155', '13970260', 'SIT ', 'SANTO ANTONIO       ', 0, '     ', 'DO GRAVI  ', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:22:08', '111'),
-(8880, 'MARIA EUGENIA DE SEIXAS SOBRAL          ', '08565290000122', '13970970', 'ROD ', 'AMPARO - JACUTINGA  ', 0, 'KM 17', 'BARAO ATAL', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:22:08', '111'),
+(8880, 'MARIA EUGENIA DE SEIXAS SOBRAL          ', '08565290000122', '13970970', 'ROD ', 'AMPARO', 'JACUTINGA  ', 0, 'KM 17', 'BARAO ATAL', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:22:08', '111'),
 (8881, 'PAULO GILBERTO VENTURINI E OUTRA        ', '08565175000158', '13970341', 'SIT ', 'VENTURINI           ', 0, '     ', 'MACUCOS   ', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:22:08', '111'),
 (8882, 'BENVINDO RODRIGUES PEREIRA              ', '08565162000189', '13973150', 'ESTR', 'MUNICIPAL DO BAIRRO ', 0, 'SITIO', 'DOS COTIAS', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:22:08', '111'),
 (8883, 'GERONIMO SECCHI                         ', '08565109000188', '13970970', 'SIT ', 'BRUMADO             ', 0, '     ', 'BRUMADO   ', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:22:08', '111'),
-(8884, 'PAULO FERNANDES E OUTROS                ', '08566884000158', '13970970', 'ROD ', 'ITAPIRA - LINDOIA, K', 0, '     ', 'RURAL     ', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:22:09', '111'),
+(8884, 'PAULO FERNANDES E OUTROS                ', '08566884000158', '13970970', 'ROD ', 'ITAPIRA', 'LINDOIA, K', 0, '     ', 'RURAL     ', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:22:09', '111'),
 (8885, 'JOSE  DA FATIMA LOPES                   ', '08567780000168', '13974904', 'ROD ', 'SP 147 ITAPIRA/LINDO', 0, 'KM 29', 'PONTE PRET', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:22:09', '111'),
 (8886, 'ODAIR ALONSO GARCIA                     ', '08565233000305', '13986000', 'FAZ ', 'CACHOEIRA           ', 0, 'RIO D', 'BARAO ATAL', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:22:09', '111'),
 (8887, 'MAURO FINELLI E OUTRAS                  ', '08572351000189', '13970970', 'SIT ', 'SANTA MARIA         ', 0, '     ', 'DOS PINHEI', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:22:09', '111'),
@@ -6087,7 +5909,7 @@ INSERT INTO `pessoa` (`id`, `descri`, `cpf_cnpj`, `cep`, `tipo_logradouro`, `log
 (8944, 'ARMANDO POLETINI                        ', '08633623000103', '13970970', 'SIT ', 'SANTO ANTONIO       ', 0, '     ', 'CORREGO DO', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:22:14', '111'),
 (8945, 'PETSHOP LATEMIA LTDA   ME               ', '08633597000113', '13973017', 'RUA ', 'ESTULANO PEREIRA DA ', 77, '     ', 'PRQ FORTAL', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:22:14', '111'),
 (8946, 'PAULO OLIVEIRA DE JACOMO E OUTRA        ', '08634148000190', '13970970', 'CH  ', 'SANTA CLARA         ', 0, '     ', 'PINHEIROS ', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:22:14', '111'),
-(8947, 'ALCIDES SCARPIONI                       ', '08634062000167', '13970970', 'FAZ ', 'SAO JOSE - QUINHAO N', 0, '     ', 'PONTE NOVA', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:22:14', '111'),
+(8947, 'ALCIDES SCARPIONI                       ', '08634062000167', '13970970', 'FAZ ', 'SAO JOSE', 'QUINHAO N', 0, '     ', 'PONTE NOVA', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:22:14', '111'),
 (8948, 'DAVID GOMES BRITO                       ', '08634051000187', '13970970', 'SIT ', 'BOA VISTA           ', 0, '     ', 'DOS COUTOS', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:22:14', '111'),
 (8949, 'AQUILES GROSSI E OUTROS                 ', '08634541000183', '13970970', 'SIT ', 'SANTO AMARO         ', 0, '     ', 'DOS PINHEI', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:22:14', '111'),
 (8950, 'JOSE FRANCISCO DE ASSIS MIRANDA         ', '08634500000197', '13970970', 'FAZ ', 'SANTA TEREZA        ', 0, '     ', 'PONTE NOVA', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:22:14', '111'),
@@ -6235,7 +6057,7 @@ INSERT INTO `pessoa` (`id`, `descri`, `cpf_cnpj`, `cep`, `tipo_logradouro`, `log
 (9091, 'BENEDITO DARCI LETRAN PLACA E OUTRA     ', '08900606000195', '13970970', 'SIT ', 'SANTA FLORA         ', 0, '     ', 'BAIRRO DE ', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:22:26', '111'),
 (9092, 'JOSE DOMINGUES DE OLIVEIRA              ', '08901310000199', '13970970', 'FAZ ', 'RETIRO SAO FRANCISCO', 0, '     ', 'ITAPIRINHA', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:22:26', '111'),
 (9093, 'EZIO MOSCON SABADINI                    ', '08901253000148', '13970970', 'SIT ', 'SANTA RITA          ', 0, '     ', 'BAIRRO DA ', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:22:27', '111'),
-(9094, 'JOSE JUCA DE OLIVEIRA SANTOS            ', '08904253000100', '13970970', 'ESTR', 'SP 147 - KM 32      ', 0, 'ZONA ', 'PONTE PRET', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:22:27', '111'),
+(9094, 'JOSE JUCA DE OLIVEIRA SANTOS            ', '08904253000100', '13970970', 'ESTR', 'SP 147', 'KM 32      ', 0, 'ZONA ', 'PONTE PRET', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:22:27', '111'),
 (9095, 'PAULO SCARPIONI                         ', '08904796000119', '13970970', 'SIT ', 'SAO JOSE            ', 0, '     ', 'BAIRRO DA ', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:22:27', '111'),
 (9096, 'TANIA DE CAMPOS SCARME DA SILVA   ME    ', '08906634000110', '13972170', 'AV  ', 'COMENDADOR VIRGOLINO', 400, 'BOX 1', 'JDM IVETE ', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:22:27', '111'),
 (9097, 'EDSON APARECIDO ESCARPIONI E OUTRO      ', '08907575000102', '13970970', 'SIT ', 'SAO JOSE            ', 0, '     ', 'BAIRRO DA ', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:22:27', '111'),
@@ -6272,7 +6094,7 @@ INSERT INTO `pessoa` (`id`, `descri`, `cpf_cnpj`, `cep`, `tipo_logradouro`, `log
 (9128, 'TRANSPORTADORA TCHE LTDA  ME            ', '08982000000146', '13973494', 'RUA ', 'JOSE PRIMO AVANCINI ', 323, '     ', 'JDM GUARUJ', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:22:30', '111'),
 (9129, 'JOAO BATISTA CIPOLA   ME                ', '66714601000174', '13973255', 'AV  ', 'BRASIL              ', 375, '     ', 'PRADOS    ', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:22:30', '111'),
 (9130, 'BIKE SPORT DE ITAPIRA LTDA   ME         ', '02154984000190', '13970200', 'RUA ', 'JOAO DE MORAES      ', 418, 'FDS  ', 'CENTRO    ', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:22:30', '111'),
-(9131, 'CELSO APARECIDO SCARPIONI               ', '08987020000100', '13970970', 'ROD ', 'SP 147 - ITAPIRA/LIN', 0, '     ', 'DA PONTE N', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:22:30', '111'),
+(9131, 'CELSO APARECIDO SCARPIONI               ', '08987020000100', '13970970', 'ROD ', 'SP 147', 'ITAPIRA/LIN', 0, '     ', 'DA PONTE N', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:22:30', '111'),
 (9132, 'A  D  PELIZARI CONSTRUCOES   ME         ', '07526532000106', '13971115', 'RUA ', 'DR  JOAO PEREIRA DA ', 126, '     ', 'PENHA RIO ', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:22:30', '111'),
 (9133, 'RENALDO BARRICATTI                      ', '08992994000181', '13970970', 'SIT ', 'TANQUINHO           ', 0, '     ', 'TANQUINHO ', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:22:30', '111'),
 (9134, 'LANCHONETE SANTOS & PAVINATO LTDA   ME  ', '08991941000146', '13974000', 'RUA ', 'SALDANHA MARINHO    ', 404, '     ', 'SANTA CRUZ', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:22:30', '111'),
@@ -6506,7 +6328,7 @@ INSERT INTO `pessoa` (`id`, `descri`, `cpf_cnpj`, `cep`, `tipo_logradouro`, `log
 (9361, 'METALURGICA ITASOLDAS LTDA   ME         ', '09327106000179', '13974520', 'RUA ', 'XV DE NOVEMBRO      ', 801, '     ', 'SANTO ANTO', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:22:51', '111'),
 (9362, 'FRANCISCO DE ASSIS FERREIRA             ', '09328177000196', '13970970', 'SIT ', 'RUA NOEMIA MIRANDA F', 111, '     ', 'PONTE NOVA', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:22:51', '111'),
 (9363, 'JAIR GOMES                              ', '09330435000179', '13970970', 'SIT ', 'DOS GOMES           ', 0, '     ', 'SANTA CRUZ', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:22:51', '111'),
-(9364, 'ANTONIO ASSAD ALCICI FILHO              ', '09330413000109', '13970970', 'ROD ', 'SP 352 - FAZENDA NOV', 0, '     ', 'BARAO ATAL', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:22:51', '111'),
+(9364, 'ANTONIO ASSAD ALCICI FILHO              ', '09330413000109', '13970970', 'ROD ', 'SP 352', 'FAZENDA NOV', 0, '     ', 'BARAO ATAL', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:22:51', '111'),
 (9365, 'VICENTE LUIZ GONCALVES                  ', '09330743000102', '13970970', 'SIT ', 'SAO VICENTE         ', 0, '     ', 'DOS LIMAS ', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:22:51', '111'),
 (9366, 'JUSCELINO APARECIDO ZANQUETA FRANCO     ', '09330728000156', '13970970', 'SIT ', 'JUSCELINO           ', 0, '     ', 'PONTE NOVA', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:22:51', '111'),
 (9367, 'JONAS FAGA JUNIOR                       ', '09328765000120', '13970970', 'ROD ', 'SP 147 FAZENDA SANTO', 0, 'KM   ', 'PONTE PRET', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:22:51', '111'),
@@ -6587,7 +6409,7 @@ INSERT INTO `pessoa` (`id`, `descri`, `cpf_cnpj`, `cep`, `tipo_logradouro`, `log
 (9442, 'PEDRO TADEU STRINGUETTI                 ', '09503646000166', '13970970', 'SIT ', 'OLHO DAGUA          ', 0, '     ', 'CERCADO GR', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:22:59', '111'),
 (9443, 'JACOMO FURIATO                          ', '09496955000237', '13970970', 'SIT ', 'ENGENHO             ', 0, '     ', 'SANTA CRUZ', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:22:59', '111'),
 (9444, 'JOSE CARLOS PIOLI                       ', '09503711000153', '13970970', 'CH  ', 'SANTO ANTONIO       ', 0, '     ', 'GRAVI     ', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:22:59', '111'),
-(9445, 'ROBERTO MONTEIRO JUNQUEIRA LOPES        ', '09503676000172', '13970970', 'FAZ ', 'SANTO ANTONIO - RODO', 0, 'KM   ', 'PONTE NOVA', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:22:59', '111'),
+(9445, 'ROBERTO MONTEIRO JUNQUEIRA LOPES        ', '09503676000172', '13970970', 'FAZ ', 'SANTO ANTONIO', 'RODO', 0, 'KM   ', 'PONTE NOVA', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:22:59', '111'),
 (9446, 'GYGATECH   COMERCIO E SERVICOS DE INFORM', '09506011000112', '13974390', 'RUA ', 'DOUTOR FRANCISCO DE ', 690, '     ', 'SANTA CRUZ', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:22:59', '111'),
 (9447, 'MAURO PELLIZARI                         ', '09507528000126', '13970970', 'SIT ', 'RECREIO             ', 0, '     ', 'DOS COUTOS', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:22:59', '111'),
 (9448, 'VALDIR TOPAN E OUTRO                    ', '09510669000106', '13970970', 'SIT ', 'MONJOLINHO          ', 0, '     ', 'MONJOLINHO', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:23:00', '111'),
@@ -6795,7 +6617,7 @@ INSERT INTO `pessoa` (`id`, `descri`, `cpf_cnpj`, `cep`, `tipo_logradouro`, `log
 (9649, 'ANTONIO BENEDITO AP MANOEL E OUTRA      ', '10460496000130', '13970970', 'SIT ', 'SAO JOSE            ', 0, '     ', 'PONTE PRET', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:23:21', '111'),
 (9650, 'VITORIO MORO                            ', '10460530000176', '13970260', 'SIT ', 'SANTO ANTONIO       ', 0, '     ', 'RIO DO PEI', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:23:21', '111'),
 (9651, 'ORION PIZZARIA  PASTELARIA  CHOPERIA E R', '62518766000110', '13970160', 'RUA ', 'COMENDADOR JOAO CINT', 373, '     ', 'CENTRO    ', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:23:21', '111'),
-(9652, 'TATIANA MONTEIRO JUNQUEIRA LOPES E OUTRO', '10474056000131', '13970970', 'FAZ ', 'SANTO ANTONIO - RODO', 0, '     ', 'PONTE NOVA', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:23:22', '111'),
+(9652, 'TATIANA MONTEIRO JUNQUEIRA LOPES E OUTRO', '10474056000131', '13970970', 'FAZ ', 'SANTO ANTONIO', 'RODO', 0, '     ', 'PONTE NOVA', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:23:22', '111'),
 (9653, 'AIMBERE HERCULES PAVEZI DANTAS   ME     ', '96604210000168', '13974330', 'RUA ', 'GENERAL CARNEIRO    ', 192, '     ', 'SANTA CRUZ', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:23:22', '111'),
 (9654, 'ARGEMIRO MARTINS DE SOUZA ME            ', '57565012000180', '13972012', 'AV  ', 'BRASIL              ', 533, '     ', 'PRADOS    ', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:23:22', '111'),
 (9655, 'RENATA LOVATO   ME                      ', '10487358000144', '13971010', 'RUA ', 'MATHIAS CINTRA PUPO ', 70, 'SALA ', 'V PENHA DO', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:23:22', '111'),
@@ -7105,7 +6927,7 @@ INSERT INTO `pessoa` (`id`, `descri`, `cpf_cnpj`, `cep`, `tipo_logradouro`, `log
 (9958, 'LUIZ FULANETO                           ', '11430826000107', '13970000', 'RUA ', 'JULIO RECHIA        ', 69, 'CASA ', 'BARAO ATAL', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:23:56', '111'),
 (9959, 'CLAUDIRENE MARIA FURTADO   ME           ', '07433776000144', '13974150', 'RUA ', 'PAPA PIO XII        ', 122, '     ', 'PIRES     ', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:23:56', '111'),
 (9960, 'EVOOC BRASIL   INDUSTRIA E COMERCIO DE C', '11442133000134', '13974380', 'RUA ', 'JOAQUIM INACIO DA SI', 412, '     ', 'SANTA CRUZ', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:23:56', '111'),
-(9961, 'EDUARDO PEREIRA ARANHA BARBOSA          ', '11447659000107', '13970970', 'ROD ', 'SP 147 - ITAPIRA/LIN', 0, 'KM   ', 'FROES     ', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:23:57', '111'),
+(9961, 'EDUARDO PEREIRA ARANHA BARBOSA          ', '11447659000107', '13970970', 'ROD ', 'SP 147', 'ITAPIRA/LIN', 0, 'KM   ', 'FROES     ', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:23:57', '111'),
 (9962, 'FARIDE GERALDO MOYSES ME                ', '60382314000128', '13973481', 'RUA ', 'SANTA TEREZINHA     ', 400, '     ', 'PRQ FORTAL', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:23:57', '111'),
 (9963, 'GUELLER ENGENHARIA E CONSTRUCOES LTDA   ', '11455740000139', '13976113', 'RUA ', 'FIRMINO VIEIRA DA SI', 96, '     ', 'V BOA ESPE', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:23:57', '111'),
 (9964, 'AGRIMAQ PECAS E MANUTENCAO DE MAQUINAS A', '11455830000120', '13972129', 'ALM ', 'PARTICULAR II       ', 66, '     ', 'JDM ITAMAR', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:23:57', '111'),
@@ -7203,32 +7025,9 @@ INSERT INTO `pessoa` (`id`, `descri`, `cpf_cnpj`, `cep`, `tipo_logradouro`, `log
 (10055, 'GR CONSTRUCOES E EMPREENDIMENTOS IMOBILI', '12051659000156', '13970230', 'RUA ', 'ALFREDO PUJOL       ', 366, '     ', 'CENTRO    ', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:24:06', '111'),
 (10056, 'ITA FIX   SISTEMA DE FIXACAO LTDA    EPP', '12056901000184', '13972330', 'RUA ', 'DO CUBATAO          ', 751, '     ', 'CUBATAO   ', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:24:06', '111'),
 (10057, 'ALEXANDRE APARECIDO GUIDETTI   ME       ', '12058983000104', '13971110', 'RUA ', 'ANTONIO ALVES DE CAM', 150, '     ', 'PENHA RIO ', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:24:07', '111'),
-(10058, 'LUCAS MACHADO PECAS   ME                ', '12059001000190', '13973255', 'AV  ', 'BRASIL              ', 289, '     ', 'PRADOS    ', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:24:07', '111'),
-(10063, '1111111', '11111111111111', '11111111', 'RUA', 'TAL', 111, '111', '111111', 871, 'ITAPIRA', 'SP', 'alexandremv1@teste.com.br', '2013-06-03 16:35:43', ''),
-(10064, 'TESTE 2', '22222222222222', '22222222', '2', '2', 2, '2', '2', 871, 'ITAPIRA', 'SP', 'alexandremv@gmail.com', '2013-06-03 16:51:52', ''),
-(10065, 'TESTE 3', '33333333333333', '33333333', '3', '3', 3, '3', '3', 871, 'ITAPIRA', 'SP', 'alexandremv@gmail.com', '2013-06-03 16:54:26', ''),
-(10066, 'TESTE 4', '44444444444444', '44444444', '4', '4', 4, '4', '4', 871, 'ITAPIRA', 'SP', 'alexandremv@gmail.com', '2013-06-03 16:55:41', ''),
-(10067, 'TESTE 5', '55555555555555', '55555555', '5', '5', 5, '5', '5', 871, 'ITAPIRA', 'SP', 'alexandremv@gmail.com', '2013-06-03 16:57:16', ''),
-(10068, 'TESTE 6', '66666666666666', '66666666', '6', '6', 6, '6', '6', 871, 'ITAPIRA', 'SP', 'alexandremv@gmail.com', '2013-06-03 16:58:17', ''),
-(10069, '8888888', '88888888888888', '88888888', 'RUA', 'TAL', 88, '', '888', 871, 'ITAPIRA', 'SP', 'alexandremv@gmail.com', '2013-06-06 15:44:22', ''),
-(10070, '999999', '99999999999999', '99999999', 'RUA', '999', 999, '999', '999', 871, 'ITAPIRA', 'SP', 'alexandremv@gmail.com', '2013-06-06 15:45:49', ''),
-(10071, 'TESTE_08_06_13_01', '22222222222', '11111111', 'RUA', 'RUA DEMETRIO RIBEIRO', 111, '111', '111', 871, 'ITAPIRA', 'SP', 'teste1@teste.com.br', '2013-06-08 21:53:42', ''),
-(10072, 'TESTE_08_06_13_02', '08062013222222', '22222222', '222', '222222', 222, '22', '22', 665, 'AMPARO', 'SP', 'teste2@teste.com.br', '2013-06-08 22:35:49', '111'),
-(10087, '11111', '11111111111111', '11111111', '111', '111111', 11111, '1111111', '11111', 871, 'ITAPIRA', 'SP', 'teste1@teste.com.br', '2013-06-13 12:19:21', '');
+(10058, 'LUCAS MACHADO PECAS   ME                ', '12059001000190', '13973255', 'AV  ', 'BRASIL              ', 289, '     ', 'PRADOS    ', 871, 'Itapira', 'SP', NULL, '2013-06-02 19:24:07', '111');
 
 -- --------------------------------------------------------
-
---
--- Estrutura da tabela `regime`
---
-
-CREATE TABLE IF NOT EXISTS `regime` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `codigo_orgao_estado` varchar(1) NOT NULL,
-  `descri` varchar(100) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `UQ_CODIGO_ORGAO_ESTADO` (`codigo_orgao_estado`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 --
 -- Extraindo dados da tabela `regime`
@@ -7246,23 +7045,6 @@ INSERT INTO `regime` (`id`, `codigo_orgao_estado`, `descri`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `usuario`
---
-
-CREATE TABLE IF NOT EXISTS `usuario` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `descri` varchar(14) NOT NULL DEFAULT '',
-  `senha` varchar(32) NOT NULL DEFAULT '',
-  `id_pessoa` int(11) NOT NULL,
-  `log_data` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `log_usuario` varchar(14) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `UQ_ID` (`id`),
-  UNIQUE KEY `UQ_DESCRI` (`descri`),
-  KEY `FK_ID_PESSOA` (`id_pessoa`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
---
 -- Extraindo dados da tabela `usuario`
 --
 
@@ -7270,17 +7052,10 @@ INSERT INTO `usuario` (`id`, `descri`, `senha`, `id_pessoa`, `log_data`, `log_us
 (1, 'alexandre', 'e10adc3949ba59abbe56e057f20f883e', 1, '2014-05-17 18:38:00', '');
 
 
+insert into cfop
+values (null,
+'teste12',
+'7.345',
+substr(codigo, 1, 1), substr(codigo, 3, 3), (case substr(codigo, 1, 1) when 1 then 1 when 2 then 1 when 3 then 1 when 5 then 2 when 6 then 2 when 7 then 2 end), (case substr(codigo, 1, 1) when 1 then 1 when 5 then 1 when 2 then 2 when 6 then 2 when 3 then 3 when 7 then 3 end), 0, 1, null, 'SYS');
 
-CREATE TABLE IF NOT EXISTS `cnae` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `descri` varchar(150) NOT NULL DEFAULT '',
-  `codigo` varchar(9) NOT NULL DEFAULT '',
-  `codigo_ini` varchar(6) NOT NULL DEFAULT '',
-  `codigo_fim`varchar(2) NOT NULL DEFAULT '',
-  `status` int(1) DEFAULT NULL,
-  `log_data` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `log_usuario` varchar(14) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `UQ_ID` (`id`),
-  UNIQUE KEY `UQ_DESCRI` (`descri`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
+

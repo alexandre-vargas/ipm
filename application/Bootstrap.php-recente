@@ -11,7 +11,10 @@ class Bootstrap {
 		define('STATUS_PENDENTE', 1);
 		define('STATUS_APROVADO', 2);
 		define('STATUS_NAO_APROVADO', 3);
-	
+
+        define('STATUS_PROCESSADO', 1);
+        define('STATUS_NAO_PROCESSADO', 2);
+
 		define('TIPO_CONTROLE_LISTAGEM_DEFAULT', 1);
 		define('TIPO_CONTROLE_LISTAGEM_REMOVER', 2);
 		define('TIPO_CONTROLE_LISTAGEM_SELECIONAR', 3);
@@ -61,6 +64,12 @@ class Bootstrap {
 		elseif($arrURI[1] == 'xxxxxx')
 			$strEnviroment = 'desenvolvimento';
 
+
+
+        $objSessionNamespace = new Zend_Session_Namespace('language');
+        $strLanguage = $objSessionNamespace->language;
+        Zend_Registry::set('language', $strLanguage);
+
 		// Cria uma instância do Config e registra.
 		$objZendConfigIni = new Zend_Config_Ini(APPLICATION_PATH . DIRECTORY_SEPARATOR . 'prefeituras' . DIRECTORY_SEPARATOR . PREFEITURA . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR . 'config.ini');
 		Zend_Registry::set('config', $objZendConfigIni->$strEnviroment);
@@ -70,5 +79,6 @@ class Bootstrap {
 		Zend_Registry::set('db', $objZendDbAdapterPDOMysql);
 
         $objZendControllerFront->dispatch();
+
 	}
 }

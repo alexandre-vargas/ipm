@@ -19,7 +19,7 @@
 	<script src="assets/javascripts/1.2.2/adminflare-demo-init.min.js" type="text/javascript"></script>
 	<script src="assets/javascripts/1.2.2/modernizr-jquery.min.js" type="text/javascript"></script>
 	<script src="assets/javascripts/1.2.2/bootstrap.min.js" type="text/javascript"></script>
-	<script src="assets/javascripts/1.2.2/adminflare-demo.min.js" type="text/javascript"></script>  
+	<script src="assets/javascripts/1.2.2/adminflare-demo.min.js" type="text/javascript"></script>
 	<script src="assets/javascripts/1.2.2/adminflare.min.js" type="text/javascript"></script>
 
 	<script src="js/layout/layout.js" type="text/javascript"></script>
@@ -28,11 +28,11 @@
 	<script src="js/bootstrap-datepicker.js" type="text/javascript"></script>
 
 	<link rel="stylesheet" type="text/css" href="css/layout/layout.css" />
-	
-	<?php echo $this->headScript(); ?> 
+
+	<?php echo $this->headScript(); ?>
 
 	<?php echo $this->headLink(); ?>
-	
+
 </head>
 
 <body>
@@ -43,27 +43,27 @@
 		<div class="navbar-inner">
 			<div class="container">
 				<a class="logo" href="#"><img alt="Af_logo" src="assets/images/af-logo.png"></a>
-				
+
 				<div class="nav-collapse collapse">
 					<ul class="nav">
 
 						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Manutenção 
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Manutenção
 								<i class=" icon-caret-down"></i>
 							</a>
 							<ul class="dropdown-menu">
 								<li><a href="<?= $this->url(array('controller' => 'contribuinte', 'action' => 'inserir'), null, true) ?>">Cadastro de Contribuintes</a></li>
 								<li><a href="<?= $this->url(array('controller' => 'contribuinte', 'action' => 'listagem'), null, true) ?>">Manutenção de Contribuintes</a></li>
 								<li><a href="<?= $this->url(array('controller' => 'contribuinte', 'action' => 'upload-lote'), null, true) ?>">Importação Lote de Contribuintes</a></li>
-								
+
 								<li class="divider"></li>
-								
+
 								<li><a href="<?= $this->url(array('controller' => 'contador', 'action' => 'inserir'), null, true) ?>">Cadastro de Contadores</a></li>
 								<li><a href="<?= $this->url(array('controller' => 'contador', 'action' => 'listagem'), null, true) ?>">Manutenção de Contadores</a></li>
-								
+
 							</ul>
 						</li>
-						
+
 						<li class="divider-vertical"></li>
 					</ul>
 					<ul class="nav pull-right">
@@ -77,8 +77,8 @@
 						</li -->
 						<li class="separator"></li>
 						<li class="dropdown">
-							<a href="#" class="dropdown-toggle usermenu" data-toggle="dropdown"> 
-								<img alt="Avatar" src="assets/images/avatar.png"> 
+							<a href="#" class="dropdown-toggle usermenu" data-toggle="dropdown">
+								<img alt="Avatar" src="assets/images/avatar.png">
 								<span>&nbsp;&nbsp;<?= $this->objZendDbTableRowPessoa->descri ?></span>
 							</a>
 							<ul class="dropdown-menu">
@@ -110,7 +110,7 @@
 				<li><a href="tables.html"><span class="icon-table"></span>Tables</a>
 				</li>
 
-				<li><a href="components.html"><span class="icon-inbox"></span>Components</a> 
+				<li><a href="components.html"><span class="icon-inbox"></span>Components</a>
 				</li>
 
 				<li class="lp-dropdown"><a href="#" class="lp-dropdown-toggle"
@@ -146,20 +146,20 @@
 		<div class="icon-caret-up"></div>
 	</nav>
 	<!-- / Left navigation panel -->
-	
+
 	<section class="container" style="border: 0px solid;">
-		<?php 
+		<?php
 		if(isset($this->arrParams['erro']) && count($this->arrParams['erro']))
 			foreach($this->arrParams['erro'] as $strErro)
 				print '<div class="alert alert-error"><a href="#" class="close" data-dismiss="alert">x</a>' . $strErro . '</div>';
-		
+
 		if(isset($this->arrSucesso[0]) && trim($this->arrSucesso[0]) != '')
 				print '<div class="alert alert-success"><a href="#" class="close" data-dismiss="alert">x</a>' . $this->arrSucesso[0] . '</div>';
-	
-		echo $this->layout()->content; 
+
+		echo $this->layout()->content;
 		?>
 	</section>
-	
-	
+
+
 </body>
 </html>

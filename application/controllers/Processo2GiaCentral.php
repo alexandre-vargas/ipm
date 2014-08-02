@@ -14,6 +14,8 @@ class Processo2GiaCentral extends Zend_Controller_Action{
     }
 
     public function indexAction() {
+        echo "teste";
+        die;
         echo "Início do processo";
         $this->_processFiles();
         echo "Fim do processo";
@@ -31,15 +33,13 @@ class Processo2GiaCentral extends Zend_Controller_Action{
             $objPDO = new PDO($strDSN);
 
             $this->_objZendDbAdapterPdoMysql->beginTransaction();
-            try {
-                $this->_import($objPDO, $strFile);
-            }catch(Exception $e){
-
-            }
-//            $this->_objZendDbAdapterPdoMysql->commit();
-
-            copy($strDirectory . $strFile, Zend_Registry::get('config')->path->gia->processado . $strFile);
-            unlink($strDirectory . $strFile);
+            $this->_import($objPDO, $strFile);
+            $this->_objZendDbAdapterPdoMysql->commit();
+/**
+ * @TODO retirar os comentários abaixo
+ */
+//            copy($strDirectory . $strFile, Zend_Registry::get('config')->path->gia->processado . $strFile);
+//            unlink($strDirectory . $strFile);
         }
     }
 
@@ -55,7 +55,10 @@ class Processo2GiaCentral extends Zend_Controller_Action{
         $this->_importIESubstituido($objPDO, $strFile);
         $this->_importIESubstituto($objPDO, $strFile);
         $this->_importOcorrencias($objPDO, $strFile);
-        $this->_importPagamento($objPDO, $strFile);
+        /**
+         * TODO encontrar uma forma de tratar o erro no PDO na linha abaixo.
+         */
+        // $this->_importPagamento($objPDO, $strFile);
         $this->_importRecibosCredito($objPDO, $strFile);
         $this->_importRegistroExportacao($objPDO, $strFile);
         $this->_importResumoCFOPsEntradas($objPDO, $strFile);
@@ -382,7 +385,7 @@ class Processo2GiaCentral extends Zend_Controller_Action{
     }
 
     private function _importPagamento($objPDO, $strFile) {
-        try{
+        try {
             $objPDOStatement = $objPDO->query('select * from tblPagamento');
             foreach($objPDOStatement as $arrRow) {
                 $objZendDbStatementPdo = $this->_objZendDbAdapterPdoMysql->query('
@@ -411,6 +414,9 @@ class Processo2GiaCentral extends Zend_Controller_Action{
                 );
             }
         }catch(Exception $e){
+            echo "teste";
+            die;
+
         }
     }
 

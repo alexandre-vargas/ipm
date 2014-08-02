@@ -76,6 +76,22 @@ die;
 	public function pillBoxAction() {
 		
 	}
-	
+
+
+    public function translate1Action() {
+
+
+
+        $translate = new Zend_Translate(
+            array(
+                'adapter' => 'array',
+                'content' => $english,
+                'locale'  => 'en'
+            )
+        );
+
+        $translate->addTranslation(array('content' => $german, 'locale' => 'de'));
+
+    }
 }
 ?>
