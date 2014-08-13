@@ -47,13 +47,12 @@
 		</div>
 	</header>
 
-	<?php 
-	if(isset($this->arrParams['erro']) && count($this->arrParams['erro']))
-		foreach($this->arrParams['erro'] as $strErro)
-			print '<div class="alert alert-error" style="margin-top: 45px;"><a href="#" class="close" data-dismiss="alert">x</a>' . $strErro . '</div>';
-	
-	if(isset($this->arrSucesso[0]) && trim($this->arrSucesso[0]) != '')
-			print '<br /><br /><div class="alert alert-success"><a href="#" class="close" data-dismiss="alert">x</a>' . $this->arrSucesso[0] . '</div>';
+	<?php
+    foreach($this->arrErro as $strErro)
+        print '<div class="alert alert-error"><a href="#" class="close" data-dismiss="alert">x</a>' . $strErro . '</div>';
+
+    foreach($this->arrSucesso as $strSucesso)
+		print '<div class="alert alert-success"><a href="#" class="close" data-dismiss="alert">x</a>' . $strSucesso . '</div>';
 	
 	echo $this->layout()->content; 
 	?>

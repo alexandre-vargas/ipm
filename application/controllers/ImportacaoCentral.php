@@ -1,46 +1,62 @@
 <?php
-class Processo2GiaCentral extends Zend_Controller_Action{
+class ImportacaoCentral extends Zend_Controller_Action{
 
-    private $_strDriver;
+    private $_strDriverMdb;
     private $_objZendDbAdapterPdoMysql;
+    private $_strDirectoryPendentes;
 
     public function init() {
         // Desabilita layout e view.
         Zend_Layout::getMvcInstance()->disableLayout();
         $this->getFrontController()->setParam('noViewRenderer', true);
 
-        $this->_strDriver = 'MDBTools'; // Definido em /etc/odbcinst.ini
+        $this->_strDriverMdb = Zend_Registry::get('config')->resources->db->access->driver; // Definido em /etc/odbcinst.ini
         $this->_objZendDbAdapterPdoMysql = Zend_Registry::get('db');
+        $this->_strDirectoryPendentes = Zend_Registry::get('config')->path->declaracao->contribuinte->pendente;
     }
 
     public function indexAction() {
-        echo "teste";
-        die;
         echo "Início do processo";
         $this->_processFiles();
         echo "Fim do processo";
     }
 
     private function _processFiles() {
-
-        $strDirectory = Zend_Registry::get('config')->path->gia->processo_2;
-        $objDirectory = dir($strDirectory);
+        $objDirectory = dir($this->_strDirectoryPendentes);
         while($strFile = $objDirectory->read()) {
             if (trim($strFile) == '.' || trim($strFile) == '..')
                 continue;
 
-            $strDSN = "odbc:Driver=$this->_strDriver;DBQ=" . $strDirectory . $strFile . ";";
-            $objPDO = new PDO($strDSN);
-
-            $this->_objZendDbAdapterPdoMysql->beginTransaction();
-            $this->_import($objPDO, $strFile);
-            $this->_objZendDbAdapterPdoMysql->commit();
+            $arrExtensao = array_reverse(explode('.', $strFile));
+            switch($arrExtensao[0]) {
+                case 'mdb':
+                    $this->_gia($strFile);
+                    break;
+                default:
+                    $this->_descarta();
+            }
 /**
  * @TODO retirar os comentários abaixo
  */
-//            copy($strDirectory . $strFile, Zend_Registry::get('config')->path->gia->processado . $strFile);
-//            unlink($strDirectory . $strFile);
+            copy($this->_strDirectoryPendentes . $strFile, Zend_Registry::get('config')->path->gia->processado . $strFile);
+            unlink($strDirectory . $strFile);
         }
+    }
+
+    private function _gia($strFile) {
+        $strDSN = "odbc:Driver=$this->_strDriverMdb;DBQ=" . $this->_strDirectoryPendentes . $strFile . ";";
+        $objPDO = new PDO($strDSN);
+
+        $this->_objZendDbAdapterPdoMysql->beginTransaction();
+        $this->_import($objPDO, $strFile);
+        $this->_objZendDbAdapterPdoMysql->commit();
+
+    }
+
+    private function _descarta() {
+        echo "descartou";
+        die;
+
     }
 
     private function _import($objPDO, $strFile){
@@ -155,10 +171,27 @@ class Processo2GiaCentral extends Zend_Controller_Action{
     private function _importDetalhesCFOPs($objPDO, $strFile) {
         $objPDOStatement = $objPDO->query('select * from tblDetalhesCFOPs');
         foreach($objPDOStatement as $arrRow) {
+
             $objZendDbStatementPdo = $this->_objZendDbAdapterPdoMysql->query('
                 insert into declaracao_gia_detalhes_cfops
+                (
+                  `novo_nome_arquivo`,
+
+                  `nro_gia`,
+
+                  `cfop`,
+
+                  `valor_contabil`,
+                  `base_calculo`,
+                  `imposto`,
+                  `isentas_nao_trib`,
+                  `outras`,
+                  `imposto_retido_st`,
+                  `imp_ret_substituto_st`,
+                  `imp_ret_substituido`,
+                  `outros_impostos`
+                )
                 values (
-                    null,
                     \'' . $strFile . '\',
 
                     ' . (trim($arrRow['NroGIA']) != '' ? $arrRow['NroGIA'] : 0) . ',
@@ -173,9 +206,7 @@ class Processo2GiaCentral extends Zend_Controller_Action{
                     ' . (trim($arrRow['ImpostoRetidoST']) != '' ? str_replace(',', '', $arrRow['ImpostoRetidoST']) : 0) . ',
                     ' . (trim($arrRow['ImpRetSubstitutoST']) != '' ? str_replace(',', '', $arrRow['ImpRetSubstitutoST']) : 0) . ',
                     ' . (trim($arrRow['ImpRetSubstituido']) != '' ? str_replace(',', '', $arrRow['ImpRetSubstituido']) : 0) . ',
-                    ' . (trim($arrRow['OutrosImpostos']) != '' ? str_replace(',', '', $arrRow['OutrosImpostos']) : 0) . ',
-
-                    null
+                    ' . (trim($arrRow['OutrosImpostos']) != '' ? str_replace(',', '', $arrRow['OutrosImpostos']) : 0) . '
 
                 )'
             );

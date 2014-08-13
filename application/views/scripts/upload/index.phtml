@@ -1,6 +1,6 @@
-<form enctype="multipart/form-data" action="<?= $this->url(array('controller' => 'upload-gia', 'action' => 'upload')); ?>" method="POST">
+<form method="POST" action="<?= $this->url(array('controller' => 'upload', 'action' => 'upload')); ?>" enctype="multipart/form-data">
     Envio de declaração para a prefeitura: <br /><br />
-	<input name="declaracao" type="file" />
+	<input type="file" name="declaracao"  />
     <input type="hidden" name="MAX_FILE_SIZE" value="30000" />
     <input type="submit" value="Enviar Declaração" />
 </form>

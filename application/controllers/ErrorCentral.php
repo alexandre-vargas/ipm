@@ -4,7 +4,6 @@ class ErrorCentral extends Zend_Controller_Action
 	public function errorAction() {
 		// Zend_Layout::getMvcInstance()->disableLayout();
 		$errors = $this->_getParam('error_handler');
-
 print '<pre>';
 print_r($errors->exception);
 die;
